@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title Library
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    == csrf_meta_tags
+    == csp_meta_tag
+
+    == stylesheet_link_tag "application"
+    == javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+  body
+    header class="p-3 bg-dark text-white mb-3"
+      div class="container"
+        nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+          ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+            li = link_to 'Home', root_path, class: 'nav-link px-2 text-white'
+            li = link_to 'Books', books_path, class: 'nav-link px-2 text-white'
+
+    main class='container'
+      == yield

@@ -1,0 +1,13 @@
+h1 class='mb-4' = @book.title
+
+div class='lead my-3'
+  = @book.author
+
+div class='lead my-3'
+  = @book.description
+
+div class='btn-group'
+  div class=%i[btn-group]
+    = link_to 'Edit', edit_book_path(@book), class: 'btn btn-primary'
+    = link_to 'Destroy', book_path(@book), class: 'btn btn-danger',
+            data: {method: :delete, confirm: 'Are you sure?'}

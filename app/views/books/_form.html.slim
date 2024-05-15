@@ -1,0 +1,25 @@
+= render 'shared/errors', object: @book
+
+= form_with model: @book do |f|
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :title
+
+    div class=%i[col-sm-10]
+      = f.text_field :title, placeholder: 'Title', class: 'form-control'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :author
+
+    div class=%i[col-sm-10]
+      = f.text_field :author, placeholder: 'Author', class: 'form-control'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :description
+
+    div class=%i[col-sm-10]
+      = f.text_area :description, placeholder: 'Description', class: 'form-control'
+
+  = f.submit 'Submit!', class: 'btn btn-primary'

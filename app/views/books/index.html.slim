@@ -1,0 +1,12 @@
+h1 Books
+
+= link_to 'New book', new_book_path, class: 'btn btn-primary btn-lg mb-3'
+
+table class=%i[table table-striped table-hover]
+  thead
+    tr
+      th class=[:col] Название
+      th class=[:col] Автор
+      th class=[:col] Описание
+  tbody
+    = render @books
