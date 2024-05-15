@@ -1,7 +1,7 @@
 = provide :main_menu do
-  header class=%i[p-3 bg-dark text-white]
+  header class=%i[p-3 bg-dark text-white mb-3]
     div class=%i[container]
       nav class=%i[d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start]
         ul class=%i[nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0]
-          li =
-          li =
+          li = nav_tab 'Home', root_path, class: 'nav-link px-2', current_page: current_page
+          li = nav_tab 'Books', books_path, class: 'nav-link px-2', current_page: current_page
