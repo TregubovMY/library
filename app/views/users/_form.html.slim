@@ -1,0 +1,40 @@
+= render 'shared/errors', object: @user
+
+= form_with model: @user do |f|
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :name
+
+    div class=%i[col-sm-10]
+      = f.text_field :name, placeholder: 'Name', class: 'form-control form-control-lg'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :email
+
+    div class=%i[col-sm-10]
+      = f.email_field :email, placeholder: 'E-mail', class: 'form-control form-control-lg'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :mobile
+
+    div class=%i[col-sm-10]
+      = f.telephone_field :mobile, placeholder: '+7 999 999-99-99', class: 'form-control form-control-lg'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :password
+
+    div class=%i[col-sm-10]
+      = f.password_field :password, class: 'form-control form-control-lg'
+
+  div class=%i[mb-3 row]
+    div class=%i[col-sm-2 col-form-label]
+      = f.label :password_confirmation
+
+    div class=%i[col-sm-10]
+      = f.password_field :password_confirmation, class: 'form-control form-control-lg'
+
+
+  = f.submit (@user.new_record? ? "Register!" : "Save"), class: 'btn btn-primary'

@@ -292,7 +292,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   dotenv-rails
-  draper
+  draper (~> 4.0.2)
   faker (~> 2)
   jbuilder
   jsbundling-rails
