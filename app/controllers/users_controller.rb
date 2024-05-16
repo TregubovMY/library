@@ -1,21 +1,14 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :require_no_authentication, only: %i[new create]
   before_action :require_authentication, only: %i[edit update]
   before_action :set_current_user!, only: %i[edit update]
-  def edit; end
-
-  def update
-    if @user.update user_params
-      flash[:success] = 'You updated your account successfully.'
-      redirect_to edit_user_path(@user)
-    else
-      render :edit
-    end
-  end
-
   def new
     @user = User.new
   end
+
+  def edit; end
 
   def create
     @user = User.new user_params
@@ -25,6 +18,15 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       render :new
+    end
+  end
+
+  def update
+    if @user.update user_params
+      flash[:success] = 'You updated your account successfully.'
+      redirect_to edit_user_path(@user)
+    else
+      render :edit
     end
   end
 

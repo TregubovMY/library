@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   include Pagy::Frontend
 
   def pagination(obj)
+    # rubocop:disable Rails/OutputSafety
     raw(pagy_bootstrap_nav(obj)) if obj.pages > 1
+    # rubocop:enable Rails/OutputSafety
   end
 
   def full_title(page_title = '')
@@ -29,6 +33,6 @@ module ApplicationHelper
   end
 
   def currently_at(current_page)
-    render partial: 'shared/menu', locals: { current_page: current_page }
+    render partial: 'shared/menu', locals: { current_page: }
   end
 end

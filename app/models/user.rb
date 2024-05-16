@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   attr_accessor :old_password, :remember_token
 
@@ -12,12 +14,16 @@ class User < ApplicationRecord
 
   def remember_me
     self.remember_token = SecureRandom.urlsafe_base64
+    # rubocop:disable Rails/SkipsModelValidations
     update_column :remember_token_digest, digest(remember_token)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def forget_me
     self.remember_token = nil
+    # rubocop:disable Rails/SkipsModelValidations
     update_column :remember_token_digest, nil
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def remember_token_authenticated?(remember_token)
@@ -34,7 +40,7 @@ class User < ApplicationRecord
            else
              BCrypt::Engine.cost
            end
-    BCrypt::Password.create(string, cost: cost)
+    BCrypt::Password.create(string, cost:)
   end
 
   def correct_old_password
@@ -48,7 +54,7 @@ class User < ApplicationRecord
     return if password.blank? || password =~ /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/
 
     msg = 'complexity requirement not met. Length should be 8-70 characters and ' \
-      'include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+          'include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
     errors.add :password, msg
   end
 

@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Authentication
   extend ActiveSupport::Concern
 
+  # rubocop:disable Metrics/BlockLength
   included do
     private
 
@@ -66,4 +69,5 @@ module Authentication
 
     helper_method :current_user, :user_signed_in?
   end
+  # rubocop:enable Metrics/BlockLength
 end

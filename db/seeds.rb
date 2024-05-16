@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 30.times do
   title = Faker::Book.title #=> "The Odd Sister"
   author = Faker::Book.author #=> "Alysha Olsen"
