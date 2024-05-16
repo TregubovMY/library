@@ -35,7 +35,7 @@ gem "bcrypt", "~> 3.1.7"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-gem 'pagy', '~> 4.10'
+gem 'pagy', '~> 8.4.0'
 
 gem 'valid_email2' # https://github.com/micke/valid_email2
 

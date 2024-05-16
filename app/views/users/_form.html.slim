@@ -22,6 +22,14 @@
     div class=%i[col-sm-10]
       = f.telephone_field :mobile, placeholder: '+7 999 999-99-99', class: 'form-control form-control-lg'
 
+  - unless @user.new_record?
+    div class=%i[mb-3 row]
+      div class=%i[col-sm-2 col-form-label]
+        = f.label :old_password
+
+      div class=%i[col-sm-10]
+        = f.password_field :old_password, class: 'form-control form-control-lg'
+
   div class=%i[mb-3 row]
     div class=%i[col-sm-2 col-form-label]
       = f.label :password
@@ -35,6 +43,5 @@
 
     div class=%i[col-sm-10]
       = f.password_field :password_confirmation, class: 'form-control form-control-lg'
-
 
   = f.submit (@user.new_record? ? "Register!" : "Save"), class: 'btn btn-primary'

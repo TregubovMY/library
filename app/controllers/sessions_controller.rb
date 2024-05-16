@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  before_action :require_no_authentication, only: %i[new create]
+  before_action :require_authentication, only: %i[destroy]
+
   def new; end
 
   def create
@@ -13,7 +16,16 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    flash[:success] = "You've been signed out!"
+    flash[:success] = 'See you later!'
+    redirect_to root_path
+  end
+
+  private
+
+  def do_sign_in(user)
+    sign_in user
+    remember(user) if params[:remember_me] == '1'
+    flash[:success] = "Welcome back, #{current_user.name_or_email}!"
     redirect_to root_path
   end
 end
