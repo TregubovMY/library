@@ -11,7 +11,7 @@ ru:
         created_at: Создана
         email: Почта
         name: Имя
-        mobile: Мобильный
+        phone: Мобильный
         old_password: Старый пароль
         password: Пароль
         password_confirmation: Подтверждение пароля

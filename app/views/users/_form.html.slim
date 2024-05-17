@@ -17,10 +17,10 @@
 
   div class=%i[mb-3 row]
     div class=%i[col-sm-2 col-form-label]
-      = f.label :mobile
+      = f.label :phone
 
     div class=%i[col-sm-10]
-      = f.telephone_field :mobile, class: 'form-control form-control-lg'
+      = f.telephone_field :phone, class: 'form-control form-control-lg'
 
   - unless @user.new_record?
     div class=%i[mb-3 row]

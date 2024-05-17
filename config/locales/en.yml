@@ -11,7 +11,7 @@ en:
         created_at: Created at
         email: Email
         name: Name
-        mobile: Mobile
+        phone: phone
         old_password: Old password
         password: Password
         password_confirmation: Password confirmation
