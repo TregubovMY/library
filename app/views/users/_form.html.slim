@@ -6,21 +6,21 @@
       = f.label :name
 
     div class=%i[col-sm-10]
-      = f.text_field :name, placeholder: 'Name', class: 'form-control form-control-lg'
+      = f.text_field :name, class: 'form-control form-control-lg'
 
   div class=%i[mb-3 row]
     div class=%i[col-sm-2 col-form-label]
       = f.label :email
 
     div class=%i[col-sm-10]
-      = f.email_field :email, placeholder: 'E-mail', class: 'form-control form-control-lg'
+      = f.email_field :email, class: 'form-control form-control-lg'
 
   div class=%i[mb-3 row]
     div class=%i[col-sm-2 col-form-label]
       = f.label :mobile
 
     div class=%i[col-sm-10]
-      = f.telephone_field :mobile, placeholder: '+7 999 999-99-99', class: 'form-control form-control-lg'
+      = f.telephone_field :mobile, class: 'form-control form-control-lg'
 
   - unless @user.new_record?
     div class=%i[mb-3 row]
@@ -44,4 +44,5 @@
     div class=%i[col-sm-10]
       = f.password_field :password_confirmation, class: 'form-control form-control-lg'
 
-  = f.submit (@user.new_record? ? "Register!" : "Save"), class: 'btn btn-primary'
+  - t_key = (@user.new_record? ? "register" : "save")
+  = f.submit t(t_key, scope: 'users.global.forms'), class: 'btn btn-primary'

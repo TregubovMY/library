@@ -1,9 +1,9 @@
-= provide :page_title, 'Books'
+= provide :page_title, t('shared.menu.books')
 = currently_at('Books')
 
-h1 Books
+h1 = t 'shared.menu.books'
 
-= link_to 'New book', new_book_path, class: 'btn btn-primary btn-lg mb-3'
+= link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3'
 
 = pagination @pagy
 

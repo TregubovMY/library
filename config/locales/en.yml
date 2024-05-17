@@ -1,31 +1,81 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  en: English
+  ru: Russian
+  activerecord:
+    attributes:
+      book:
+        title: Title
+        author: Author
+        description: Description
+      user:
+        created_at: Created at
+        email: Email
+        name: Name
+        mobile: Mobile
+        old_password: Old password
+        password: Password
+        password_confirmation: Password confirmation
+        updated_at: Updated at
+    models:
+      question: Book
+  pages:
+    index:
+      title: Welcome to library!
+  shared:
+    menu:
+      home: Home
+      books: Books
+      book: Book
+      new_book: New book
+      user_profile: User profile
+      log_out: Log Out
+      sign_up: Sign Up
+      log_in: Log In
+  books:
+    index:
+      add_book: Add book
+    create:
+      success: Book created!
+    destroy:
+      success: Book deleted!
+    edit:
+      title: Edit book
+    update:
+      success: Book updated!
+
+  users:
+    create:
+      success: Welcome back, %{name}!
+    edit:
+      title: Edit profile
+    global:
+      forms:
+        register: Register
+        save: Save
+    update:
+      success: Your profile was successfully updated!
+  sessions:
+    create:
+      invalid_creds: Incorrect email and/or password!
+      success: Welcome back, %{name}!
+    destroy:
+      success: До новых встреч!
+    new:
+      form:
+        email: Email
+        password: Password
+        remember_me: Remember me
+        submit: Sign in!
+  global:
+    name: Library
+    remember_me: Remember me
+    button:
+      delete: Delete
+      edit: Edit
+      show: Show
+      submit: Submit
+    dialog:
+      you_sure: Are you sure?
+    flash:
+      already_signed_in: You are already signed in!
+      not_signed_in: You are not signed in!

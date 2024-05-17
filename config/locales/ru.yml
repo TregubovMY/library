@@ -1,0 +1,80 @@
+ru:
+  en: Английский
+  ru: Русский
+  activerecord:
+    attributes:
+      book:
+        title: Название
+        author: Автор
+        description: Описание
+      user:
+        created_at: Создана
+        email: Почта
+        name: Имя
+        mobile: Мобильный
+        old_password: Старый пароль
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        updated_at: Обновлено
+    models:
+      question: Книги
+  pages:
+    index:
+      title: Добро пожаловать в библиотеку!
+  shared:
+    menu:
+      home: Главная
+      books: Книги
+      book: Книга
+      new_book: Новая книга
+      user_profile: Профиль
+      log_out: Выйти
+      sign_up: Зарегистрироваться
+      log_in: Войти
+  books:
+    index:
+      add_book: Добавить книгу
+    create:
+      success: Книга создана!
+    destroy:
+      success: Книга удалена!
+    edit:
+      title: Редактировать книгу
+    update:
+      success: Книга обновлена!
+  users:
+    create:
+      success: Добро пожаловать в приложение, %{name}!
+    edit:
+      title: Редактировать профиль
+    global:
+      forms:
+        register: Зарегистрироваться
+        save: Сохранить
+    update:
+      success: Ваш профиль был обновлён!
+  sessions:
+    create:
+      invalid_creds: Неверный email и/или пароль!
+      success: С возвращением, %{name}!
+    destroy:
+      success: До новых встреч!
+    new:
+      form:
+        email: Email
+        password: Пароль
+        remember_me: Запомнить меня
+        submit: Войти!
+  global:
+    name: Библиоткека
+    remember_me: Запомнить меня
+    button:
+      delete: Удалить
+      edit: Изменить
+      show: Показать
+      submit: Отправить
+    dialog:
+      you_sure: Вы уверены?
+    flash:
+      already_signed_in: Вы уже вошли в систему!
+      not_signed_in: Вы не вошли в систему!
