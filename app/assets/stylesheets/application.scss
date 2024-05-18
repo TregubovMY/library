@@ -13,7 +13,7 @@
   width: 16px;
   height: 16px;
   display: inline-block;
-  background: url('../images/flags.png') no-repeat; // ToDo: Fix webpack config
+  background: url('flags.png') no-repeat;
   overflow: hidden;
   text-indent: -9999px;
   text-align: left;
@@ -30,6 +30,6 @@
 .nav {
   .flag {
     position: relative;
-    top: 5px;
+    top: 2px;
   }
 }

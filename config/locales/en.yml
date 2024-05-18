@@ -2,6 +2,15 @@ en:
   en: English
   ru: Russian
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              complexity_error: 'complexity requirement not met. Length should be 8-70 characters and 
+                                 include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+            old_password:
+              is_incorrect: is incorrect
     attributes:
       book:
         title: Title
@@ -12,6 +21,7 @@ en:
         email: Email
         name: Name
         phone: phone
+        role: Role
         old_password: Old password
         password: Password
         password_confirmation: Password confirmation
@@ -28,9 +38,11 @@ en:
       book: Book
       new_book: New book
       user_profile: User profile
+      edit_profile: Edit profile
       log_out: Log Out
       sign_up: Sign Up
       log_in: Log In
+      users: Users
   books:
     index:
       add_book: Add book
@@ -42,18 +54,38 @@ en:
       title: Edit book
     update:
       success: Book updated!
-
   users:
     create:
       success: Welcome back, %{name}!
     edit:
       title: Edit profile
+    index:
+      title: Sign Up
     global:
       forms:
         register: Register
         save: Save
     update:
       success: Your profile was successfully updated!
+    password_complexity:
+      complexity_error: 'complexity requirement not met. Length should be 8-70 characters and
+            include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+  admin:
+    users:
+      index:
+        title: User Management
+      edit:
+        title: Edit user
+      update:
+        success: User updated successfully.
+      destroy:
+        success: User delete successfully.
+      create:
+        success: User was successfully created.
+      new:
+        title: Create user
+    button:
+      create_user: Create user
   sessions:
     create:
       invalid_creds: Incorrect email and/or password!
@@ -69,6 +101,11 @@ en:
   global:
     name: Library
     remember_me: Remember me
+    user:
+      roles:
+        user: User
+        moderator: Moderator
+        admin: Admin
     button:
       delete: Delete
       edit: Edit
@@ -79,3 +116,4 @@ en:
     flash:
       already_signed_in: You are already signed in!
       not_signed_in: You are not signed in!
+      not_authorized: You are not authorized to perform this action!

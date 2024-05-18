@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
+  before_action :require_authentication, except: %i[index show]
   before_action :set_book!, only: %i[edit update destroy]
+  before_action :authorize_book!
+  after_action :verify_authorized
 
   def index
     @pagy, @books = pagy Book.all
@@ -51,5 +54,9 @@ class BooksController < ApplicationController
 
   def set_book!
     @book = Book.find(params[:id])
+  end
+
+  def authorize_book!
+    authorize(@book || Book)
   end
 end

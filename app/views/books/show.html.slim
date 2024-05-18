@@ -1,5 +1,5 @@
 = provide :page_title, t('shared.menu.book')
-= currently_at('Book')
+= currently_at  t('shared.menu.book')
 
 h1 class='mb-4' = @book.title
 
@@ -9,8 +9,7 @@ div class='lead my-3'
 div class='lead my-3'
   = @book.description
 
-div class='btn-group'
-  div class=%i[btn-group]
-    = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
-    = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-            data: {method: :delete, confirm: t('global.dialog.you_sure')}
+div class=%i[btn-group]
+  = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
+  = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
+          data: {method: :delete, confirm: t('global.dialog.you_sure')}

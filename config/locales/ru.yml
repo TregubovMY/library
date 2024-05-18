@@ -2,6 +2,15 @@ ru:
   en: Английский
   ru: Русский
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              complexity_error: 'требования к сложности не соблюдены. Длина должна составлять 8-70 символов и
+                                 должен содержать: 1 заглавный, 1 строчный, 1 цифру и 1 специальный символ'
+            old_password:
+              is_incorrect: не верный
     attributes:
       book:
         title: Название
@@ -12,6 +21,7 @@ ru:
         email: Почта
         name: Имя
         phone: Мобильный
+        role: Роль
         old_password: Старый пароль
         password: Пароль
         password_confirmation: Подтверждение пароля
@@ -28,9 +38,11 @@ ru:
       book: Книга
       new_book: Новая книга
       user_profile: Профиль
+      edit_profile: Изменить профиль
       log_out: Выйти
       sign_up: Зарегистрироваться
       log_in: Войти
+      users: Пользователи
   books:
     index:
       add_book: Добавить книгу
@@ -47,12 +59,30 @@ ru:
       success: Добро пожаловать в приложение, %{name}!
     edit:
       title: Редактировать профиль
+    index:
+      title: Зарегистрироваться
     global:
       forms:
         register: Зарегистрироваться
         save: Сохранить
     update:
       success: Ваш профиль был обновлён!
+  admin:
+    users:
+      index:
+        title: Управление пользователями
+      edit:
+        title: Редактирование пользователя
+      update:
+        success: Пользователь успешно обнавлен.
+      destroy:
+        success: Удаление пользователя прошло успешно.
+      create:
+        success: Пользователь был успешно создан.
+      new:
+        title: Создание пользователя
+    button:
+      create_user: Создать Пользователя
   sessions:
     create:
       invalid_creds: Неверный email и/или пароль!
@@ -68,6 +98,11 @@ ru:
   global:
     name: Библиоткека
     remember_me: Запомнить меня
+    user:
+      roles:
+        user: Пользователь
+        moderator: Модератор
+        admin: Админ
     button:
       delete: Удалить
       edit: Изменить
@@ -78,3 +113,4 @@ ru:
     flash:
       already_signed_in: Вы уже вошли в систему!
       not_signed_in: Вы не вошли в систему!
+      not_authorized: Вы не можете выполнять это действие!
