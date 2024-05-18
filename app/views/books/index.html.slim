@@ -8,12 +8,12 @@ h1 = t 'shared.menu.books'
 
 = pagination @pagy
 
-table class=%i[table table-striped table-hover]
+table.table.table-striped.table-hover
   thead
     tr
-      th class=[:col] Название
-      th class=[:col] Автор
-      th class=[:col] Описание
+      th.col Название
+      th.col Автор
+      th.col Описание
   tbody
     = render @books
 

@@ -1,0 +1,12 @@
+linters:
+  LineLength:
+    max: 100
+  RuboCop:
+    enabled: true
+    ignore_parent_exclusion: false
+    inherit_from_parent: true
+    exclude:
+      - '**/*.slim'
+    cops:
+      Style/HashSyntax:
+        Enabled: false

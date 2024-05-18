@@ -49,7 +49,7 @@ gem 'rails-i18n', '~> 7.0'
 
 gem 'pundit', '~> 2.3'
 
-gem "phonelib", "~> 0.8.8"
+gem 'phonelib', '~> 0.8.8'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -76,3 +76,5 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+gem 'slim_lint', '~> 0.27.0'
