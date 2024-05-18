@@ -12,7 +12,10 @@ class User < ApplicationRecord
   validates :password, confirmation: true, allow_blank: true
 
   validates :email, presence: true, uniqueness: true, 'valid_email_2/email': true
+  validates :phone, phone: true, allow_blank: true
   validate :password_complexity
+
+  before_save :normalize_phone
 
   def guest?
     false
@@ -64,5 +67,9 @@ class User < ApplicationRecord
 
   def password_presence
     errors.add(:password, :blank) if password_digest.blank?
+  end
+
+  def normalize_phone
+    self.phone = Phonelib.parse(phone).full_e164.presence
   end
 end
