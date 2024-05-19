@@ -8,6 +8,9 @@
           - if policy(%i[admin user]).index?
             li = nav_tab t('.users'), admin_users_path, class: 'nav-link px-2',
                     current_page: current_page
+          - if policy(:borrowing).index?
+            li = nav_tab t('.my_books'), borrowings_path, class: 'nav-link px-2',
+                  current_page: current_page
 
         ul.nav.col-12.col-lg-auto.mb-2.mb-md-0
           li.dropdown
@@ -22,7 +25,7 @@
                   - if I18n.locale == locale
                     = tag.span t(locale), class: 'dropdown-item'
                   - else
-                    = link_to t(locale), root_path(locale: locale), class: 'dropdown-item'
+                    = link_to t(locale), url_for(locale: locale), class: 'dropdown-item'
 
         .nav.col-12.col-lg-auto.mb-2.mb-md-0
           - if user_signed_in?

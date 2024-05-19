@@ -62,6 +62,7 @@ group :development, :test do
   gem 'rubocop', '~> 1.6', require: false
   gem 'rubocop-performance', '~> 1.18', require: false
   gem 'rubocop-rails', '~> 2.2', require: false
+  gem 'slim_lint', '~> 0.27.0'
 
   gem 'dotenv-rails'
 end
@@ -76,5 +77,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-
-gem 'slim_lint', '~> 0.27.0'

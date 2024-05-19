@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :borrowings, dependent: :nullify
+  has_many :books, through: :borrowings
+
   enum role: { user: 0, moderator: 1, admin: 2 }, _suffix: :role
 
   attr_accessor :old_password, :remember_token, :admin_edit

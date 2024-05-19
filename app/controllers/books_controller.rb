@@ -12,6 +12,8 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    @borrowing = Borrowing.borrowing_book_by_user(current_user, @book)
+    @pagy, @borrowings = pagy Borrowing.all_borrowings_book(@book)
   end
 
   def new
@@ -49,7 +51,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :description)
+    params.require(:book).permit(:title, :author, :description, :total_books)
   end
 
   def set_book!

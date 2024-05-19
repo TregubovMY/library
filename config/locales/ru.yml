@@ -11,11 +11,21 @@ ru:
                                  должен содержать: 1 заглавный, 1 строчный, 1 цифру и 1 специальный символ'
             old_password:
               is_incorrect: не верный
+        borrowing:
+          attributes:
+            returned_at:
+              is_incorrect: должно быть после даты взятия книги
+        book:
+          attributes:
+            total_books:
+              is_incorrect: не может быть больше, чем книг всего
     attributes:
       book:
         title: Название
         author: Автор
         description: Описание
+        total_books: Всего книг
+        available_books: Доступно книг
       user:
         created_at: Создана
         email: Почта
@@ -26,6 +36,9 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         updated_at: Обновлено
+      borrowing:
+        borrowed_at: Взяли
+        returned_at: Вернули
     models:
       question: Книги
   pages:
@@ -43,9 +56,11 @@ ru:
       sign_up: Зарегистрироваться
       log_in: Войти
       users: Пользователи
+      my_books: Мои книги
   books:
     index:
       add_book: Добавить книгу
+      available_all: Доступно / Всего
     create:
       success: Книга создана!
     destroy:
@@ -54,6 +69,17 @@ ru:
       title: Редактировать книгу
     update:
       success: Книга обновлена!
+    show:
+      no_book: Нет книги
+      history_borrowings: История заимствованния
+      available_all_msg: '%{available_books} книг доступно из %{total_books} всего'
+  borrowings:
+    create:
+      success: Книга успешно взята!
+    update:
+      success: Книга успешно возвращена!
+    index:
+      available_all: Доступно / Всего
   users:
     create:
       success: Добро пожаловать в приложение, %{name}!
@@ -108,6 +134,8 @@ ru:
       edit: Изменить
       show: Показать
       submit: Отправить
+      take_book: Взять книгу
+      return_book: Вернуть книгу
     dialog:
       you_sure: Вы уверены?
     flash:
