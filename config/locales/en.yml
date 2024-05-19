@@ -127,6 +127,7 @@ en:
   global:
     name: Library
     remember_me: Remember me
+    title_filter: Filter
     user:
       roles:
         user: User
@@ -139,6 +140,7 @@ en:
       submit: Submit
       take_book: Take book
       return_book: Return book
+      filter: Filter
     dialog:
       you_sure: Are you sure?
     flash:

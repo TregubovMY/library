@@ -7,12 +7,16 @@ class BooksController < ApplicationController
   after_action :verify_authorized
 
   def index
-    @pagy, @books = pagy Book.all
+    @books = Book.all
+    title = params[:title].presence || '%'
+    author = params[:author].presence || '%'
+    @books = @books.where('title LIKE ? AND author LIKE ?', "%#{title}%", "%#{author}%")
+    @pagy, @books = pagy(@books)
   end
 
   def show
     @book = Book.find(params[:id])
-    @borrowing = Borrowing.borrowing_book_by_user(current_user, @book)
+    @borrowing = Borrowing.borrowing_book_by_user(current_user, @book) if current_user
     @pagy, @borrowings = pagy Borrowing.all_borrowings_book(@book)
   end
 

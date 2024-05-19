@@ -7,7 +7,7 @@ class Borrowing < ApplicationRecord
   validate :return_date_after_borrow_date
 
   def self.borrowing_by_user(user)
-    where(user_id: user.id, returned_at: nil).includes(:book)
+    where(user_id: user.id, returned_at: nil).joins(:book)
   end
 
   def self.borrowing_book_by_user(user, book)

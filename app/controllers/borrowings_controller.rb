@@ -6,8 +6,12 @@ class BorrowingsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    @pagy, borrowings = pagy(Borrowing.borrowing_by_user(current_user))
-    @books = borrowings.map(&:book)
+    borrowings = Borrowing.borrowing_by_user(current_user)
+    title = params[:title].presence || '%'
+    author = params[:author].presence || '%'
+    @books = borrowings.where('books.title LIKE ? AND books.author LIKE ?', "%#{title}%", "%#{author}%")
+    @pagy, @books = pagy(@books)
+    @books = @books.map(&:book)
   end
 
   def create

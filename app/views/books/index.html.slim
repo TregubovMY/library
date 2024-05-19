@@ -6,18 +6,22 @@ h1 = t 'shared.menu.books'
 - if policy(@books).create?
   = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3'
 
-= pagination @pagy
+.row.mt-3
+  .col-md-4
+    h3 = t 'global.title_filter'
 
-- scope = 'activerecord.attributes.book'
-table.table.table-striped.table-hover
-  thead
-    tr
-      th.col = t 'title', scope: scope
-      th.col = t 'author', scope: scope
-      th.col = t '.available_all'
-      th.col = t 'description', scope: scope
-      th.col
-  tbody
-    = render @books
+    = render 'shared/filter', path: books_path
 
-= pagination @pagy
+  .col-md-8
+    - scope = 'activerecord.attributes.book'
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th.col = t 'title', scope: scope
+          th.col = t 'author', scope: scope
+          th.col = t '.available_all'
+          th.col
+      tbody
+        = render @books
+
+    = pagination @pagy

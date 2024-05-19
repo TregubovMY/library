@@ -124,6 +124,7 @@ ru:
   global:
     name: Библиоткека
     remember_me: Запомнить меня
+    title_filter: Фильтр
     user:
       roles:
         user: Пользователь
@@ -136,6 +137,7 @@ ru:
       submit: Отправить
       take_book: Взять книгу
       return_book: Вернуть книгу
+      filter: Фильтровать
     dialog:
       you_sure: Вы уверены?
     flash:
