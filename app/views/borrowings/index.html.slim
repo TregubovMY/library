@@ -1,0 +1,24 @@
+= provide :page_title, t('shared.menu.my_books')
+= currently_at t('shared.menu.my_books')
+
+h1 = t 'shared.menu.my_books'
+
+.row.mt-3
+  .col-md-4
+    h3 = t 'global.title_filter'
+
+    = render 'shared/filter', path: borrowings_path
+
+  .col-md-8
+    - scope = 'activerecord.attributes.book'
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th.col = t 'title', scope: scope
+          th.col = t 'author', scope: scope
+          th.col = t '.available_all'
+          th.col
+      tbody
+        = render partial: 'books/book', collection: @books, as: :book
+
+    = pagination @pagy

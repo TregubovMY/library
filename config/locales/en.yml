@@ -1,31 +1,149 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  en: English
+  ru: Russian
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              complexity_error: 'complexity requirement not met. Length should be 8-70 characters and 
+                                 include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+            old_password:
+              is_incorrect: is incorrect
+        borrowing:
+          attributes:
+            returned_at:
+              is_incorrect: it must be after the date of taking the book
+        book:
+          attributes:
+            total_books:
+              is_incorrect: there can't be more than just books
+    attributes:
+      book:
+        title: Title
+        author: Author
+        description: Description
+        total_books: Total books
+        available_books: Available books
+      user:
+        created_at: Created at
+        email: Email
+        name: Name
+        phone: Phone
+        role: Role
+        old_password: Old password
+        password: Password
+        password_confirmation: Password confirmation
+        updated_at: Updated at
+      borrowing:
+        borrowed_at: Borrowed at
+        returned_at: Returned at
+    models:
+      question: Book
+  pages:
+    index:
+      title: Welcome to library!
+  shared:
+    menu:
+      home: Home
+      books: Books
+      book: Book
+      new_book: New book
+      user_profile: User profile
+      edit_profile: Edit profile
+      log_out: Log Out
+      sign_up: Sign Up
+      log_in: Log In
+      users: Users
+      my_books: My books
+  books:
+    index:
+      add_book: Add book
+      available_all: Available / All
+    create:
+      success: Book created!
+    destroy:
+      success: Book deleted!
+    edit:
+      title: Edit book
+    update:
+      success: Book updated!
+    show:
+      no_book: No book
+      history_borrowings: History borrowings
+      available_all_msg: '%{available_books} books are available from %{total_books} all'
+  borrowings:
+    create:
+      success: Book taken successfully!
+    update:
+      success: Book returned successfully!
+    index:
+      available_all: Available / All
+  users:
+    create:
+      success: Welcome back, %{name}!
+    edit:
+      title: Edit profile
+    index:
+      title: Sign Up
+    global:
+      forms:
+        register: Register
+        save: Save
+    update:
+      success: Your profile was successfully updated!
+    password_complexity:
+      complexity_error: 'complexity requirement not met. Length should be 8-70 characters and
+            include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+  admin:
+    users:
+      index:
+        title: User Management
+      edit:
+        title: Edit user
+      update:
+        success: User updated successfully.
+      destroy:
+        success: User delete successfully.
+      create:
+        success: User was successfully created.
+      new:
+        title: Create user
+    button:
+      create_user: Create user
+  sessions:
+    create:
+      invalid_creds: Incorrect email and/or password!
+      success: Welcome back, %{name}!
+    destroy:
+      success: See you soon!
+    new:
+      form:
+        email: Email
+        password: Password
+        remember_me: Remember me
+        submit: Sign in!
+  global:
+    name: Library
+    remember_me: Remember me
+    title_filter: Filter
+    user:
+      roles:
+        user: User
+        moderator: Moderator
+        admin: Admin
+    button:
+      delete: Delete
+      edit: Edit
+      show: Show
+      submit: Submit
+      take_book: Take book
+      return_book: Return book
+      filter: Filter
+    dialog:
+      you_sure: Are you sure?
+    flash:
+      already_signed_in: You are already signed in!
+      not_signed_in: You are not signed in!
+      not_authorized: You are not authorized to perform this action!

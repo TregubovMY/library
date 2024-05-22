@@ -12,6 +12,15 @@ module.exports = {
     sourceMapFilename: "[file].map",
     chunkFormat: "module",
     path: path.resolve(__dirname, "app/assets/builds"),
+    assetModuleFilename: "app/assets/images/[name][ext]"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|jpeg|)$/i,
+        type: 'asset/resource',
+      }
+    ]
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({

@@ -1,0 +1,25 @@
+= provide :page_title, t('shared.menu.log_in')
+= currently_at t('shared.menu.log_in')
+
+h1 = t('shared.menu.log_in')
+
+= form_with url: session_path do |f|
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :email, t('.form.email')
+    .col-sm-10
+      = f.email_field :email, value: params[:email], class: 'form-control form-control-lg'
+
+  .mb-3.row
+    .col-sm-2.col-form-label
+      = f.label :password, t('.form.password')
+    .col-sm-10
+      = f.password_field :password, class: 'form-control form-control-lg'
+
+  .row.mb-3
+    .offset-sm-2.col-sm-10
+      .form-check
+        = f.check_box :remember_me, class: 'form-check-input', value: '1'
+        = f.label t('global.remember_me'), class: 'form-check-label'
+
+  = f.submit t('shared.menu.log_in'), class: 'btn btn-primary btn-lg'
