@@ -8,11 +8,15 @@ module Admin
     after_action :verify_authorized
 
     def index
-      @pagy, @users = pagy User.order(created_at: :desc)
+      @users = User.order(created_at: :desc).page(params[:page])
+
+      add_breadcrumb t('shared.menu.users'), admin_users_path
     end
 
     def new
       @user = User.new
+
+      add_breadcrumb t('shared.menu.create_user'), new_admin_user_path
     end
 
     def edit; end

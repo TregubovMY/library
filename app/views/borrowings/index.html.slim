@@ -1,4 +1,3 @@
-= provide :page_title, t('shared.menu.my_books')
 = currently_at t('shared.menu.my_books')
 
 h1 = t 'shared.menu.my_books'
@@ -21,4 +20,4 @@ h1 = t 'shared.menu.my_books'
       tbody
         = render partial: 'books/book', collection: @books, as: :book
 
-    = pagination @pagy
+    = paginate @books

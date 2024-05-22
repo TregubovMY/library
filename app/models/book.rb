@@ -10,6 +10,13 @@ class Book < ApplicationRecord
 
   before_save :update_available_books
 
+  scope :search_book, lambda { |title = nil, author = nil|
+    query = all
+    query = query.where('title LIKE ?', "%#{title}%") if title.present?
+    query = query.where('author LIKE ?', "%#{author}%") if author.present?
+    query
+  }
+
   private
 
   def available_books_must_be_less_than_or_equal_to_total_books

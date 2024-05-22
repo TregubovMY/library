@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta charset='utf-8'
-    title = full_title(yield(:page_title))
+    title #{t('global.name')} | #{render_breadcrumbs}
     meta name='viewport' content='width=device-width,initial-scale=1'
     == csrf_meta_tags
     == csp_meta_tag

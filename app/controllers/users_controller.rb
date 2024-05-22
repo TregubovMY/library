@@ -11,7 +11,9 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def edit; end
+  def edit
+    add_breadcrumb t('shared.menu.edit_profile'), edit_user_path(current_user)
+  end
 
   def create
     @user = User.new user_params

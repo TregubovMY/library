@@ -1,12 +1,9 @@
-- provide :page_title, t('.title')
 - currently_at t('shared.menu.users')
 
 h1.mb-4 = t '.title'
 
 = link_to t('admin.button.create_user'), new_admin_user_path,
         class: 'btn btn-primary mb-3'
-
-= pagination @pagy
 
 - scope = 'activerecord.attributes.user'
 table.table.table-striped.table-hover
@@ -22,4 +19,4 @@ table.table.table-striped.table-hover
   tbody
     = render @users
 
-= pagination @pagy
+= paginate @users

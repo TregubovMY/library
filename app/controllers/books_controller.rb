@@ -2,29 +2,34 @@
 
 class BooksController < ApplicationController
   before_action :require_authentication, except: %i[index show]
-  before_action :set_book!, only: %i[edit update destroy]
+  before_action :set_book!, only: %i[edit update destroy show]
   before_action :authorize_book!
   after_action :verify_authorized
 
+  has_scope :search_book
+
   def index
-    @books = Book.all
-    title = params[:title].presence || '%'
-    author = params[:author].presence || '%'
-    @books = @books.where('title LIKE ? AND author LIKE ?', "%#{title}%", "%#{author}%")
-    @pagy, @books = pagy(@books)
+    @books = apply_scopes(Book).search_book(params[:title], params[:author]).page(params[:page])
+
+    add_breadcrumb t('shared.menu.books'), books_path
   end
 
   def show
-    @book = Book.find(params[:id])
     @borrowing = Borrowing.borrowing_book_by_user(current_user, @book) if current_user
-    @pagy, @borrowings = pagy Borrowing.all_borrowings_book(@book)
+    @borrowings = Borrowing.all_borrowings_book(@book).page(params[:page])
+
+    add_breadcrumb @book.title, book_path(@book)
   end
 
   def new
     @book = Book.new
+
+    add_breadcrumb t('shared.menu.new_book'), new_book_path
   end
 
-  def edit; end
+  def edit
+    add_breadcrumb @book.title, edit_book_path(@book)
+  end
 
   def create
     @book = Book.new book_params

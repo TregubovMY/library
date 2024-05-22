@@ -37,8 +37,6 @@ gem 'bcrypt', '~> 3.1.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-gem 'pagy', '~> 8.4.0'
-
 gem 'valid_email2' # https://github.com/micke/valid_email2
 
 gem 'slim-rails'
@@ -50,6 +48,12 @@ gem 'rails-i18n', '~> 7.0'
 gem 'pundit', '~> 2.3'
 
 gem 'phonelib', '~> 0.8.8'
+
+gem "breadcrumbs_on_rails"
+
+gem 'has_scope'
+
+gem 'kaminari'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

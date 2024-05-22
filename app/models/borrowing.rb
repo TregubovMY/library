@@ -6,8 +6,15 @@ class Borrowing < ApplicationRecord
 
   validate :return_date_after_borrow_date
 
+  scope :search_book_by_user, lambda { |user, title = nil, author = nil|
+    query = borrowing_by_user(user)
+    query = query.where('title LIKE ?', "%#{title}%") if title.present?
+    query = query.where('author LIKE ?', "%#{author}%") if author.present?
+    query
+  }
+
   def self.borrowing_by_user(user)
-    where(user_id: user.id, returned_at: nil).joins(:book)
+    select('books.*, book_id').where(user_id: user.id, returned_at: nil).joins(:book)
   end
 
   def self.borrowing_book_by_user(user, book)

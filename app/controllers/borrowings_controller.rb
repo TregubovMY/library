@@ -5,13 +5,11 @@ class BorrowingsController < ApplicationController
   before_action :authorize_borrowing!
   after_action :verify_authorized
 
+  has_scope :search_book_by_user
   def index
-    borrowings = Borrowing.borrowing_by_user(current_user)
-    title = params[:title].presence || '%'
-    author = params[:author].presence || '%'
-    @books = borrowings.where('books.title LIKE ? AND books.author LIKE ?', "%#{title}%", "%#{author}%")
-    @pagy, @books = pagy(@books)
-    @books = @books.map(&:book)
+    @books = apply_scopes(Borrowing).search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
+
+    add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
 
   def create
