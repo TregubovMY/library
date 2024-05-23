@@ -12,19 +12,17 @@ h1.mb-4 = @book.title
   = t('.available_all_msg', available_books: @book.available_books, total_books: @book.total_books)
 
 .btn-group
-  - if policy(%i[admin user]).edit?
-    = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
-    = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-            data: { method: :delete, confirm: t('global.dialog.you_sure') }
+  = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
+  = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
+          data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
-  - if policy(:borrowing).index?
-    - if @borrowing.present?
-      = link_to t('global.button.return_book'), borrowing_path(@borrowing),
-              method: :patch, class: 'btn btn-secondary'
-    - elsif @book.available_books <= 0
-      button.btn.disabled.secondary = t('.no_book')
-    - else
-      = link_to t('global.button.take_book'), book_borrowings_path(@book),
+  - if @borrowing.present?
+    = link_to t('global.button.return_book'), borrowing_path(@borrowing),
+            method: :patch, class: 'btn btn-secondary'
+  - elsif @book.available_books <= 0
+    button.btn.disabled.secondary = t('.no_book')
+  - else
+    = link_to t('global.button.take_book'), book_borrowings_path(@book),
               method: :post, class: 'btn btn-secondary'
 
 hr

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
-  before_action :require_authentication, except: %i[index show]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_book!, only: %i[edit update destroy show]
-  before_action :authorize_book!
-  after_action :verify_authorized
 
   has_scope :search_book
 
@@ -65,9 +63,5 @@ class BooksController < ApplicationController
 
   def set_book!
     @book = Book.find(params[:id])
-  end
-
-  def authorize_book!
-    authorize(@book || Book)
   end
 end

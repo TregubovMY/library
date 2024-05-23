@@ -10,6 +10,8 @@ html
     == stylesheet_link_tag 'application'
     == javascript_include_tag 'application',
             'data-turbo-track': 'reload', type: 'module'
+    link rel="stylesheet" href="https://kobare.github.io/custom_devise_styles/style.css"
+    link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
   body
     = yield :main_menu
 

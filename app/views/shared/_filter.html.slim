@@ -1,17 +1,17 @@
 - scope = 'activerecord.attributes.book'
 = form_with url: path, method: :get, local: true do |f|
   .mb-3.row
-    .col-sm-2.col-form-label
+    .col-sm-3.col-form-label
       = f.label :title, t('title', scope: scope)
 
-    .col-sm-10
+    .col-sm-9
       = f.text_field :title, value: params[:title], class: 'form-control'
 
   .mb-3.row
-    .col-sm-2.col-form-label
+    .col-sm-3.col-form-label
       = f.label :author, t('author', scope: scope)
 
-    .col-sm-10
+    .col-sm-9
       = f.text_field :author, value: params[:author], class: 'form-control'
 
   = f.submit t('global.button.filter'), class: 'btn btn-primary'

@@ -9,11 +9,16 @@ Rails.application.routes.draw do
     end
     resources :borrowings, only: %i[index update]
 
-    resources :users, only: %i[new create edit update]
-    resource :session, only: %i[new create destroy]
+    devise_for :users, controllers: {
+      sessions: 'users/sessions',
+      registrations: 'users/registrations'
+    }
 
-    namespace :admin do
-      resources :users, only: %i[index new create edit update destroy]
-    end
+    # resources :users, only: %i[new create edit update]
+    # resource :session, only: %i[new create destroy]
+
+    # namespace :admin do
+    #   resources :users, only: %i[index new create edit update destroy]
+    # end
   end
 end

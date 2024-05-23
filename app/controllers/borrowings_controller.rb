@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class BorrowingsController < ApplicationController
-  before_action :require_authentication
-  before_action :authorize_borrowing!
-  after_action :verify_authorized
+  before_action :authenticate_user!
 
   has_scope :search_book_by_user
   def index
-    @books = apply_scopes(Borrowing).search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
+    @books = apply_scopes(Borrowing)
+             .search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
 
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
@@ -44,9 +43,5 @@ class BorrowingsController < ApplicationController
       @borrowing.update!(returned_at: Time.zone.now)
       @borrowing.book.increment(:available_books).save!
     end
-  end
-
-  def authorize_borrowing!
-    authorize(@borrowing || Borrowing)
   end
 end

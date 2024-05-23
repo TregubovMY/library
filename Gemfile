@@ -54,6 +54,12 @@ gem "breadcrumbs_on_rails"
 gem 'has_scope'
 
 gem 'kaminari'
+
+gem 'devise'
+# gem 'twitter-bootstrap-rails'
+# gem 'devise-bootstrap-views'
+# gem 'therubyracer'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -69,6 +75,8 @@ group :development, :test do
   gem 'slim_lint', '~> 0.27.0'
 
   gem 'dotenv-rails'
+
+  gem 'letter_opener'
 end
 
 group :development do

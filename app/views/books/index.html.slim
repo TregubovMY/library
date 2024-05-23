@@ -2,8 +2,7 @@
 
 h1 = t 'shared.menu.books'
 
-- if policy(@books).create?
-  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3'
+= link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3'
 
 .row.mt-3
   .col-md-4
