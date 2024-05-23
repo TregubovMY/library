@@ -14,11 +14,20 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-    # resources :users, only: %i[new create edit update]
-    # resource :session, only: %i[new create destroy]
+    authenticate :user, ->(user) { user.admin_role? } do
+      namespace :admin do
+        resources :users, only: %i[index new create edit update destroy] do
+          member do
+            patch :restore
+          end
+        end
+      end
 
-    # namespace :admin do
-    #   resources :users, only: %i[index new create edit update destroy]
-    # end
+      resources :books do
+        member do
+          patch :restore
+        end
+      end
+    end
   end
 end

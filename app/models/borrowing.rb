@@ -25,6 +25,10 @@ class Borrowing < ApplicationRecord
     where(book_id: book.id).includes(:user)
   end
 
+  def user
+    User.with_deleted.find(user_id)
+  end
+
   private
 
   def return_date_after_borrow_date

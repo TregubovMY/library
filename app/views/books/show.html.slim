@@ -13,8 +13,11 @@ h1.mb-4 = @book.title
 
 .btn-group
   = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
-  = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-          data: { method: :delete, confirm: t('global.dialog.you_sure') }
+  - if @book.deleted?
+    = link_to "Restore", restore_book_path(@book), class: 'btn btn-danger', method: :patch
+  - else
+    = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
+            data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
   - if @borrowing.present?
     = link_to t('global.button.return_book'), borrowing_path(@borrowing),
@@ -28,15 +31,15 @@ h1.mb-4 = @book.title
 hr
 
 h1 = t '.history_borrowings'
-
-table.table.table-striped.table-hover
-  thead
-    tr
-      th.col = t('activerecord.attributes.user.name')
-      th.col = t('activerecord.attributes.user.email')
-      th.col = t('activerecord.attributes.borrowing.borrowed_at')
-      th.col = t('activerecord.attributes.borrowing.returned_at')
-  tbody
-    = render partial: 'borrowings/borrowing', collection: @borrowings, as: :borrowing
+.table-responsive
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th.col.col-2 = t('activerecord.attributes.user.name')
+        th.col.col-4 = t('activerecord.attributes.user.email')
+        th.col.col-3 = t('activerecord.attributes.borrowing.borrowed_at')
+        th.col.col-3 = t('activerecord.attributes.borrowing.returned_at')
+    tbody
+      = render partial: 'borrowings/borrowing', collection: @borrowings, as: :borrowing
 
 = paginate @borrowings

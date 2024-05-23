@@ -57,6 +57,7 @@ en:
       log_in: Log In
       users: Users
       my_books: My books
+      create_user: Create user
   books:
     index:
       add_book: Add book

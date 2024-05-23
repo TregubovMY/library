@@ -56,6 +56,8 @@ gem 'has_scope'
 gem 'kaminari'
 
 gem 'devise'
+
+gem 'paranoia'
 # gem 'twitter-bootstrap-rails'
 # gem 'devise-bootstrap-views'
 # gem 'therubyracer'

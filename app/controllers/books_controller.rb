@@ -2,12 +2,14 @@
 
 class BooksController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
-  before_action :set_book!, only: %i[edit update destroy show]
+  before_action :set_book!, only: %i[edit update destroy show restore]
 
   has_scope :search_book
 
   def index
-    @books = apply_scopes(Book).search_book(params[:title], params[:author]).page(params[:page])
+    admin = true if current_user&.admin_role?
+    @books = apply_scopes(Book)
+             .search_book(params[:title], params[:author], admin).page(params[:page])
 
     add_breadcrumb t('shared.menu.books'), books_path
   end
@@ -55,6 +57,15 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  def restore
+    if @book.restore
+      flash[:success] = "Good" # t('.success')
+    else
+      flash[:danger] = "Bad" # t('.failure')
+    end
+    redirect_to book_path(@book)
+  end
+
   private
 
   def book_params
@@ -62,6 +73,7 @@ class BooksController < ApplicationController
   end
 
   def set_book!
-    @book = Book.find(params[:id])
+    @book = Book.with_deleted.find(params[:id])
+    raise ActiveRecord::RecordNotFound if @book.deleted_at? && !current_user&.admin_role?
   end
 end

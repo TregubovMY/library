@@ -57,6 +57,7 @@ ru:
       log_in: Войти
       users: Пользователи
       my_books: Мои книги
+      create_user: Создать пользователя
   books:
     index:
       add_book: Добавить книгу

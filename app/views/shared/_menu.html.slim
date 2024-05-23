@@ -5,8 +5,8 @@
         ul.nav.col-12.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
           li = nav_tab t('.home'), root_path, class: 'nav-link px-2', current_page: current_page
           li = nav_tab t('.books'), books_path, class: 'nav-link px-2', current_page: current_page
-          / li = nav_tab t('.users'), admin_users_path, class: 'nav-link px-2',
-          /         current_page: current_page
+          li = nav_tab t('.users'), admin_users_path, class: 'nav-link px-2',
+                  current_page: current_page
           li = nav_tab t('.my_books'), borrowings_path, class: 'nav-link px-2',
                 current_page: current_page
 
