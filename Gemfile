@@ -49,7 +49,7 @@ gem 'pundit', '~> 2.3'
 
 gem 'phonelib', '~> 0.8.8'
 
-gem "breadcrumbs_on_rails"
+gem 'breadcrumbs_on_rails'
 
 gem 'has_scope'
 
@@ -57,10 +57,10 @@ gem 'kaminari'
 
 gem 'devise'
 
-gem 'paranoia'
-gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
+gem 'paranoia'
 gem 'therubyracer'
+gem 'twitter-bootstrap-rails'
 
 gem 'cancancan'
 

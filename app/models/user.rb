@@ -9,7 +9,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
-  has_many :borrowings
   has_many :books, through: :borrowings
 
   enum role: { user: 0, moderator: 1, admin: 2 }, _suffix: :role

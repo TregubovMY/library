@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class AddDeviseToUsers < ActiveRecord::Migration[7.1]
+  # rubocop:disable Metrics/MethodLength
   def self.up
-    change_table :users do |t|
+    change_table :users, bulk: true do |t|
       ## Database authenticatable
       t.string :encrypted_password, null: false, default: ''
 
@@ -31,7 +32,6 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-
       # Uncomment below if timestamps were not included in your original model.
       # t.timestamps null: false
     end
@@ -42,7 +42,6 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
 
     # add constrains (Left it after down because have nil false to this field)
     change_column_default :users, :email, ''
-
 
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
@@ -69,7 +68,6 @@ class AddDeviseToUsers < ActiveRecord::Migration[7.1]
     ## Restore old fields
     add_column :users, :password_digest, :string
     add_column :users, :remember_token_digest, :string
-
-
   end
 end
+# rubocop:enable Metrics/MethodLength

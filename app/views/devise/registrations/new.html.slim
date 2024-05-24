@@ -10,12 +10,14 @@ section.ftco-section
               = render "devise/shared/error_messages", resource: resource
               h2 = t('global.welcome')
               p = t('.already_member')
-              = link_to t('shared.menu.sign_in'), new_user_session_path(resource_name) , class: 'btn btn-white btn-outline-white'
+              = link_to t('shared.menu.sign_in'), new_user_session_path(resource_name) ,
+                      class: 'btn btn-white btn-outline-white'
           .login-wrap.p-4.p-lg-5
             .d-flex
               .w-100
                 h3.mb-4 = t('shared.menu.sign_up')
-            = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'signin-form' }) do |f|
+            = form_for(resource, as: resource_name, url: registration_path(resource_name),
+                    html: { class: 'signin-form' }) do |f|
               .form-group.mb-3
                 = f.label :email, class: 'label'
                 = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', required: true
@@ -23,9 +25,11 @@ section.ftco-section
                 = f.label :password, class: 'label'
                 - if @minimum_password_length
                   em = ' ' + t('global.minimum_password_length', minimum_password_length: @minimum_password_length)
-                = f.password_field :password, autocomplete: "new-password", class: 'form-control', required: true
+                = f.password_field :password, autocomplete: "new-password", class: 'form-control',
+                        required: true
                 = f.label :password_confirmation, class: 'label'
-                = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', required: true
+                = f.password_field :password_confirmation, autocomplete: "new-password",
+                        class: 'form-control', required: true
               .form-group
                 = f.submit t('shared.menu.sign_up'), class: 'form-control btn btn-primary submit px-3'
               .form-group.d-md-flex

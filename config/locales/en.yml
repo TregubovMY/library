@@ -115,6 +115,8 @@ en:
         success: User was successfully created.
       new:
         title: Create user
+      restore:
+        success: Restore success.
     button:
       create_user: Create user
   global:

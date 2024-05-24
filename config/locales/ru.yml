@@ -112,6 +112,8 @@ ru:
         success: Пользователь был успешно создан.
       new:
         title: Создание пользователя
+      restore:
+        success: Пользователь восстановлен.
     button:
       create_user: Создать Пользователя
   global:

@@ -48,11 +48,11 @@ module Admin
 
     def restore
       if @user.restore
-        flash[:success] = "Good" # t('.success')
+        flash[:success] = t('.success')
+        redirect_to admin_users_path
       else
-        flash[:danger] = "Bad" # t('.failure')
+        render :index
       end
-      redirect_to admin_users_path
     end
 
     private
@@ -76,6 +76,5 @@ module Admin
         :email, :phone, :name, :password, :password_confirmation, :role
       )
     end
-
   end
 end
