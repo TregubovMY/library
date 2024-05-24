@@ -18,6 +18,6 @@ h1 = t 'shared.menu.my_books'
           th.col = t '.available_all'
           th.col
       tbody
-        = render partial: 'books/book', collection: @books, as: :book
+        = render partial: 'borrowings/book', collection: @books
 
     = paginate @books

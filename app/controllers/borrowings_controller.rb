@@ -2,6 +2,7 @@
 
 class BorrowingsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   has_scope :search_book_by_user
   def index

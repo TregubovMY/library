@@ -14,17 +14,12 @@ class User < ApplicationRecord
 
   enum role: { user: 0, moderator: 1, admin: 2 }, _suffix: :role
 
-
-  # validate :correct_old_password, on: :update, if: -> { password.present? && !admin_edit }
-  # validates :password, confirmation: true, allow_blank: true
-
   validates :email, presence: true, uniqueness: true, 'valid_email_2/email': true
   validates :phone, phone: true, allow_blank: true
-  # validate :password_complexity
 
   before_save :normalize_phone
 
-  def guest?
+  def guest_role?
     false
   end
 

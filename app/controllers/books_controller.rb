@@ -2,6 +2,8 @@
 
 class BooksController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
+  load_and_authorize_resource
+
   before_action :set_book!, only: %i[edit update destroy show restore]
 
   has_scope :search_book

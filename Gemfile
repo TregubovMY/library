@@ -58,9 +58,11 @@ gem 'kaminari'
 gem 'devise'
 
 gem 'paranoia'
-# gem 'twitter-bootstrap-rails'
-# gem 'devise-bootstrap-views'
-# gem 'therubyracer'
+gem 'twitter-bootstrap-rails'
+gem 'devise-bootstrap-views'
+gem 'therubyracer'
+
+gem 'cancancan'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
