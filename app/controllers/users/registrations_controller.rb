@@ -13,9 +13,10 @@ module Users
     # end
 
     # GET /resource/edit
-    # def edit
-    #   super
-    # end
+    def edit
+      add_breadcrumb t('shared.menu.edit_profile'), edit_user_registration_path
+      super
+    end
 
     # PUT /resource
     # def update

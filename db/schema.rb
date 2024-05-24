@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_23_132347) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_24_130503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +23,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_132347) do
     t.integer "total_books", default: 0
     t.integer "available_books", default: 0
     t.datetime "deleted_at"
+    t.index ["author"], name: "index_books_on_author"
     t.index ["deleted_at"], name: "index_books_on_deleted_at"
+    t.index ["title"], name: "index_books_on_title"
   end
 
   create_table "borrowings", force: :cascade do |t|

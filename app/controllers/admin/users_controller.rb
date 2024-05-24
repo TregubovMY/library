@@ -17,7 +17,9 @@ module Admin
       add_breadcrumb t('shared.menu.create_user'), new_admin_user_path
     end
 
-    def edit; end
+    def edit
+      add_breadcrumb t('users.edit.title'), edit_admin_user_path
+    end
 
     def create
       @user = User.new user_params

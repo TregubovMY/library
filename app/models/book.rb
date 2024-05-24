@@ -3,6 +3,7 @@
 class Book < ApplicationRecord
   acts_as_paranoid
 
+  has_many :borrowings, dependent: :destroy
   has_many :users, through: :borrowings
 
   validates :title, :author, :description, :total_books, presence: true

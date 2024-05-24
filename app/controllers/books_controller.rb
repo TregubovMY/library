@@ -8,7 +8,7 @@ class BooksController < ApplicationController
   has_scope :search_book
 
   def index
-    admin = true if current_user&.admin_role?
+    admin = current_user&.admin_role?
     @books = apply_scopes(Book)
              .search_book(params[:title], params[:author], admin).page(params[:page])
 
