@@ -15,7 +15,7 @@ h1.mb-4 = @book.title
   - if can? :manage, Book
     = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
     - if @book.deleted?
-      = link_to "Restore", restore_book_path(@book), class: 'btn btn-danger', method: :patch
+      = link_to t('global.button.restore'), restore_book_path(@book), class: 'btn btn-danger', method: :patch
     - else
       = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
               data: { method: :delete, confirm: t('global.dialog.you_sure') }

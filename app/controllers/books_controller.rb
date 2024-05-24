@@ -2,9 +2,8 @@
 
 class BooksController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
-  load_and_authorize_resource
-
   before_action :set_book!, only: %i[edit update destroy show restore]
+  authorize_resource
 
   has_scope :search_book
 
@@ -54,18 +53,21 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book.destroy
-    flash[:success] = t('.success')
-    redirect_to books_path
+    if @book.destroy
+      flash[:success] = t('.success')
+      redirect_to books_path
+    else
+      render :show
+    end
   end
 
   def restore
     if @book.restore
-      flash[:success] = "Good" # t('.success')
+      flash[:success] = t('.success')
+      redirect_to book_path(@book)
     else
-      flash[:danger] = "Bad" # t('.failure')
+      render :show
     end
-    redirect_to book_path(@book)
   end
 
   private
@@ -76,6 +78,6 @@ class BooksController < ApplicationController
 
   def set_book!
     @book = Book.with_deleted.find(params[:id])
-    raise ActiveRecord::RecordNotFound if @book.deleted_at? && !current_user&.admin_role?
+    raise ActiveRecord::RecordNotFound if @book.deleted_at? && !current_user.admin_role?
   end
 end
