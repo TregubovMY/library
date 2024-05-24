@@ -27,10 +27,8 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :books do
-        member do
-          patch :restore
-        end
+      resources :books, only: [] do
+        patch :restore, on: :member
       end
     end
   end
