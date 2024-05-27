@@ -2,12 +2,17 @@
 
 module Users
   class RegistrationsController < Devise::RegistrationsController
+    # rubocop:disable Rails/LexicallyScopedActionFilter
+    before_action :configure_sign_up_params, only: %i[create]
+    before_action :configure_account_update_params, only: %i[update]
+    # rubocop:enable Rails/LexicallyScopedActionFilter
+
     # GET /resource/sign_up
     # def new
     #   super
     # end
 
-    # POST /resource
+    # # POST /resource
     # def create
     #   super
     # end
@@ -41,7 +46,7 @@ module Users
 
     # If you have extra params to permit, append them to the sanitizer.
     def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up, keys: %i[name phone])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[name phone remember_me])
     end
 
     # If you have extra params to permit, append them to the sanitizer.

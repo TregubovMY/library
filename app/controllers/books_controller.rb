@@ -8,9 +8,8 @@ class BooksController < ApplicationController
   has_scope :search_book
 
   def index
-    admin = current_user&.admin_role?
     @books = apply_scopes(Book)
-             .search_book(params[:title], params[:author], admin).page(params[:page])
+             .search_book(params[:title], params[:author], current_user&.admin_role?).page(params[:page])
 
     add_breadcrumb t('shared.menu.books'), books_path
   end
@@ -36,8 +35,7 @@ class BooksController < ApplicationController
     @book = Book.new book_params
 
     if @book.save
-      flash[:success] = t('.success')
-      redirect_to books_path
+      redirect_to books_path, flash: { success: t('.success') }
     else
       render :new
     end
@@ -45,8 +43,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update book_params
-      flash[:success] = t('.success')
-      redirect_to book_path(@book)
+      redirect_to book_path(@book), flash: { success: t('.success') }
     else
       render :edit
     end
@@ -54,8 +51,7 @@ class BooksController < ApplicationController
 
   def destroy
     if @book.destroy
-      flash[:success] = t('.success')
-      redirect_to books_path
+      redirect_to books_path, flash: { success: t('.success') }
     else
       render :show
     end
@@ -63,8 +59,7 @@ class BooksController < ApplicationController
 
   def restore
     if @book.restore
-      flash[:success] = t('.success')
-      redirect_to book_path(@book)
+      redirect_to book_path(@book), flash: { success: t('.success') }
     else
       render :show
     end

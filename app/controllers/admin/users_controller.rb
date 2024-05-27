@@ -26,8 +26,7 @@ module Admin
       @user.skip_confirmation!
 
       if @user.save
-        flash[:success] = t('.success')
-        redirect_to admin_users_path
+        redirect_to admin_users_path, flash: { success: t('.success') }
       else
         render :new
       end
@@ -35,8 +34,7 @@ module Admin
 
     def update
       if update_user_attributes
-        flash[:success] = t '.success'
-        redirect_to admin_users_path
+        redirect_to admin_users_path, flash: { success: t('.success') }
       else
         render :edit, status: :unprocessable_entity
       end
@@ -44,14 +42,12 @@ module Admin
 
     def destroy
       @user.destroy
-      flash[:success] = t '.success'
-      redirect_to admin_users_path, status: :see_other
+      redirect_to admin_users_path, flash: { success: t('.success') }, status: :see_other
     end
 
     def restore
       if @user.restore
-        flash[:success] = t('.success')
-        redirect_to admin_users_path
+        redirect_to admin_users_path, flash: { success: t('.success') }
       else
         render :index
       end
@@ -70,7 +66,7 @@ module Admin
     end
 
     def set_user!
-      @user = User.with_deleted.find params[:id]
+      @user = User.with_deleted.find(params[:id])
     end
 
     def user_params

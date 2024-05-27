@@ -1,4 +1,4 @@
-tr class=(user.deleted? ? 'table-danger' : '')
+tr class=('table-danger' if user.deleted?)
   th scope="row" = user.id
   td = user.name
   td = user.email

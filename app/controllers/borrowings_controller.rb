@@ -15,8 +15,7 @@ class BorrowingsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
     create_borrowing_and_update_book
-    flash[:success] = t('.success')
-    redirect_to book_path(@book)
+    redirect_to book_path(@book), flash: { success: t('.success') }
   rescue ActiveRecord::RecordInvalid
     render 'books/show'
   end
@@ -24,8 +23,7 @@ class BorrowingsController < ApplicationController
   def update
     @borrowing = Borrowing.find(params[:id])
     update_borrowing_and_update_book
-    flash[:success] = t('.success')
-    redirect_to book_path(@borrowing.book)
+    redirect_to book_path(@borrowing.book), flash: { success: t('.success') }
   rescue ActiveRecord::RecordInvalid
     render 'books/show'
   end

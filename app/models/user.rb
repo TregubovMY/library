@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, 'valid_email_2/email': true
   validates :phone, phone: true, allow_blank: true
+  validate :password_complexity
 
   before_save :normalize_phone
 
@@ -27,5 +28,12 @@ class User < ApplicationRecord
 
   def normalize_phone
     self.phone = Phonelib.parse(phone).full_e164.presence
+  end
+
+  def password_complexity
+    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return if password.blank? || password =~ /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/
+
+    errors.add :password, :complexity_error
   end
 end

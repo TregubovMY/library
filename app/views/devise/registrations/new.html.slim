@@ -1,5 +1,8 @@
 = currently_at t('shared.menu.sign_up')
 
+
+= render "shared/errors", object: resource
+
 section.ftco-section
   .container
     .row.justify-content-center
@@ -7,7 +10,6 @@ section.ftco-section
         .wrap.d-md-flex
           .text-wrap.p-4.p-lg-5.text-center.d-flex.align-items-center.order-md-last
             .text.w-100
-              = render "devise/shared/error_messages", resource: resource
               h2 = t('global.welcome')
               p = t('.already_member')
               = link_to t('shared.menu.sign_in'), new_user_session_path(resource_name) ,
@@ -21,6 +23,13 @@ section.ftco-section
               .form-group.mb-3
                 = f.label :email, class: 'label'
                 = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', required: true
+              .form-group.mb-3
+                = f.label :name, class: 'label'
+                = f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control', required: true
+              .form-group.mb-3
+                = f.label :phone, class: 'label'
+                = f.telephone_field :phone, autofocus: true, autocomplete: "phone",
+                        class: 'form-control', required: true
               .form-group.mb-3
                 = f.label :password, class: 'label'
                 - if @minimum_password_length
