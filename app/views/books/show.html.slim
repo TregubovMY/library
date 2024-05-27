@@ -1,4 +1,3 @@
-= provide :page_title, t('shared.menu.book')
 = currently_at t('shared.menu.book')
 
 h1.mb-4 = @book.title
@@ -13,12 +12,16 @@ h1.mb-4 = @book.title
   = t('.available_all_msg', available_books: @book.available_books, total_books: @book.total_books)
 
 .btn-group
-  - if policy(%i[admin user]).edit?
+  - if can? :manage, Book
     = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
-    = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-            data: { method: :delete, confirm: t('global.dialog.you_sure') }
+    - if @book.deleted?
+      = link_to t('global.button.restore'), restore_book_path(@book),
+              class: 'btn btn-danger', method: :patch
+    - else
+      = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
+              data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
-  - if policy(:borrowing).index?
+  - if can? :manage, Borrowing
     - if @borrowing.present?
       = link_to t('global.button.return_book'), borrowing_path(@borrowing),
               method: :patch, class: 'btn btn-secondary'
@@ -26,22 +29,20 @@ h1.mb-4 = @book.title
       button.btn.disabled.secondary = t('.no_book')
     - else
       = link_to t('global.button.take_book'), book_borrowings_path(@book),
-              method: :post, class: 'btn btn-secondary'
+                method: :post, class: 'btn btn-secondary'
 
 hr
 
 h1 = t '.history_borrowings'
+.table-responsive
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th.col.col-2 = t('activerecord.attributes.user.name')
+        th.col.col-4 = t('activerecord.attributes.user.email')
+        th.col.col-3 = t('activerecord.attributes.borrowing.borrowed_at')
+        th.col.col-3 = t('activerecord.attributes.borrowing.returned_at')
+    tbody
+      = render partial: 'borrowings/borrowing', collection: @borrowings, as: :borrowing
 
-= pagination @pagy
-
-table.table.table-striped.table-hover
-  thead
-    tr
-      th.col = t('activerecord.attributes.user.name')
-      th.col = t('activerecord.attributes.user.email')
-      th.col = t('activerecord.attributes.borrowing.borrowed_at')
-      th.col = t('activerecord.attributes.borrowing.returned_at')
-  tbody
-    = render partial: 'borrowings/borrowing', collection: @borrowings, as: :borrowing
-
-= pagination @pagy
+= paginate @borrowings

@@ -32,10 +32,11 @@ ru:
         name: Имя
         phone: Мобильный
         role: Роль
-        old_password: Старый пароль
+        current_password: Текущий пароль
         password: Пароль
         password_confirmation: Подтверждение пароля
         updated_at: Обновлено
+        remember_me: Запомнить меня
       borrowing:
         borrowed_at: Взяли
         returned_at: Вернули
@@ -57,6 +58,8 @@ ru:
       log_in: Войти
       users: Пользователи
       my_books: Мои книги
+      create_user: Создать пользователя
+      sign_in: Войти
   books:
     index:
       add_book: Добавить книгу
@@ -73,6 +76,8 @@ ru:
       no_book: Нет книги
       history_borrowings: История заимствованния
       available_all_msg: '%{available_books} книг доступно из %{total_books} всего'
+    restore:
+      success: Книга успешно востановленна
   borrowings:
     create:
       success: Книга успешно взята!
@@ -107,20 +112,10 @@ ru:
         success: Пользователь был успешно создан.
       new:
         title: Создание пользователя
+      restore:
+        success: Пользователь восстановлен.
     button:
       create_user: Создать Пользователя
-  sessions:
-    create:
-      invalid_creds: Неверный email и/или пароль!
-      success: С возвращением, %{name}!
-    destroy:
-      success: До новых встреч!
-    new:
-      form:
-        email: Email
-        password: Пароль
-        remember_me: Запомнить меня
-        submit: Войти!
   global:
     name: Библиоткека
     remember_me: Запомнить меня
@@ -135,12 +130,22 @@ ru:
       edit: Изменить
       show: Показать
       submit: Отправить
+      restore: Восстановить
       take_book: Взять книгу
       return_book: Вернуть книгу
       filter: Фильтровать
+      update: Обновить
+      back: Назад
     dialog:
       you_sure: Вы уверены?
     flash:
       already_signed_in: Вы уже вошли в систему!
       not_signed_in: Вы не вошли в систему!
       not_authorized: Вы не можете выполнять это действие!
+  views:
+    pagination:
+      first: "&laquo; Первая"
+      last: "Последняя &raquo;"
+      previous: "&lsaquo; Предыдущая"
+      next: "Следующая &rsaquo;"
+      truncate: "&хеллип;"

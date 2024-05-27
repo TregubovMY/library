@@ -7,13 +7,25 @@ Rails.application.routes.draw do
     resources :books do
       resources :borrowings, only: [:create]
     end
+
     resources :borrowings, only: %i[index update]
 
-    resources :users, only: %i[new create edit update]
-    resource :session, only: %i[new create destroy]
+    devise_for :users, controllers: {
+      registrations: 'users/registrations'
+    }
 
-    namespace :admin do
-      resources :users, only: %i[index new create edit update destroy]
+    authenticate :user, ->(user) { user.admin_role? } do
+      namespace :admin do
+        resources :users, only: %i[index new create edit update destroy] do
+          member do
+            patch :restore
+          end
+        end
+      end
+
+      resources :books, only: [] do
+        patch :restore, on: :member
+      end
     end
   end
 end

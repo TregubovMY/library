@@ -1,24 +1,21 @@
 # frozen_string_literal: true
 
 class BorrowingsController < ApplicationController
-  before_action :require_authentication
-  before_action :authorize_borrowing!
-  after_action :verify_authorized
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
+  has_scope :search_book_by_user
   def index
-    borrowings = Borrowing.borrowing_by_user(current_user)
-    title = params[:title].presence || '%'
-    author = params[:author].presence || '%'
-    @books = borrowings.where('books.title LIKE ? AND books.author LIKE ?', "%#{title}%", "%#{author}%")
-    @pagy, @books = pagy(@books)
-    @books = @books.map(&:book)
+    @books = apply_scopes(Borrowing)
+             .search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
+
+    add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
 
   def create
     @book = Book.find(params[:book_id])
     create_borrowing_and_update_book
-    flash[:success] = t('.success')
-    redirect_to book_path(@book)
+    redirect_to book_path(@book), flash: { success: t('.success') }
   rescue ActiveRecord::RecordInvalid
     render 'books/show'
   end
@@ -26,8 +23,7 @@ class BorrowingsController < ApplicationController
   def update
     @borrowing = Borrowing.find(params[:id])
     update_borrowing_and_update_book
-    flash[:success] = t('.success')
-    redirect_to book_path(@borrowing.book)
+    redirect_to book_path(@borrowing.book), flash: { success: t('.success') }
   rescue ActiveRecord::RecordInvalid
     render 'books/show'
   end
@@ -46,9 +42,5 @@ class BorrowingsController < ApplicationController
       @borrowing.update!(returned_at: Time.zone.now)
       @borrowing.book.increment(:available_books).save!
     end
-  end
-
-  def authorize_borrowing!
-    authorize(@borrowing || Borrowing)
   end
 end

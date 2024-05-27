@@ -1,5 +1,7 @@
-tr
-  td = book.title
+tr class=(book.deleted? ? 'table-danger' : '')
+  td
+    = book.title
+    span.text-danger = ' Удалена' if book.deleted?
   td = book.author
   th #{book.available_books} / #{book.total_books}
   td

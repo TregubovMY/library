@@ -1,4 +1,3 @@
-= provide :page_title, t('shared.menu.my_books')
 = currently_at t('shared.menu.my_books')
 
 h1 = t 'shared.menu.my_books'
@@ -19,6 +18,6 @@ h1 = t 'shared.menu.my_books'
           th.col = t '.available_all'
           th.col
       tbody
-        = render partial: 'books/book', collection: @books, as: :book
+        = render partial: 'borrowings/book', collection: @books
 
-    = pagination @pagy
+    = paginate @books

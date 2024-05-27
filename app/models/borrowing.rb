@@ -1,13 +1,22 @@
 # frozen_string_literal: true
 
 class Borrowing < ApplicationRecord
-  belongs_to :user
-  belongs_to :book
+  acts_as_paranoid
+
+  belongs_to :user, -> { with_deleted }, inverse_of: :borrowings
+  belongs_to :book, -> { with_deleted }, inverse_of: :borrowings
 
   validate :return_date_after_borrow_date
 
+  scope :search_book_by_user, (lambda do |user, title = nil, author = nil|
+    query = borrowing_by_user(user)
+    query = query.where('title LIKE ?', "%#{title}%") if title.present?
+    query = query.where('author LIKE ?', "%#{author}%") if author.present?
+    query
+  end)
+
   def self.borrowing_by_user(user)
-    where(user_id: user.id, returned_at: nil).joins(:book)
+    select('books.*, book_id').where(user_id: user.id, returned_at: nil).joins(:book)
   end
 
   def self.borrowing_book_by_user(user, book)
@@ -15,7 +24,7 @@ class Borrowing < ApplicationRecord
   end
 
   def self.all_borrowings_book(book)
-    where(book_id: book.id).includes(:user)
+    with_deleted.where(book_id: book.id).includes(:user)
   end
 
   private

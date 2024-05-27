@@ -32,10 +32,11 @@ en:
         name: Name
         phone: Phone
         role: Role
-        old_password: Old password
         password: Password
+        current_password: Current password
         password_confirmation: Password confirmation
         updated_at: Updated at
+        remember_me: Remember me
       borrowing:
         borrowed_at: Borrowed at
         returned_at: Returned at
@@ -57,6 +58,8 @@ en:
       log_in: Log In
       users: Users
       my_books: My books
+      create_user: Create user
+      sign_in: Sign In
   books:
     index:
       add_book: Add book
@@ -73,6 +76,8 @@ en:
       no_book: No book
       history_borrowings: History borrowings
       available_all_msg: '%{available_books} books are available from %{total_books} all'
+    restore:
+      success: Restore success
   borrowings:
     create:
       success: Book taken successfully!
@@ -110,20 +115,10 @@ en:
         success: User was successfully created.
       new:
         title: Create user
+      restore:
+        success: Restore success.
     button:
       create_user: Create user
-  sessions:
-    create:
-      invalid_creds: Incorrect email and/or password!
-      success: Welcome back, %{name}!
-    destroy:
-      success: See you soon!
-    new:
-      form:
-        email: Email
-        password: Password
-        remember_me: Remember me
-        submit: Sign in!
   global:
     name: Library
     remember_me: Remember me
@@ -136,6 +131,9 @@ en:
     button:
       delete: Delete
       edit: Edit
+      update: Update
+      back: Back
+      restore: Restore
       show: Show
       submit: Submit
       take_book: Take book
@@ -147,3 +145,10 @@ en:
       already_signed_in: You are already signed in!
       not_signed_in: You are not signed in!
       not_authorized: You are not authorized to perform this action!
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Prev"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"

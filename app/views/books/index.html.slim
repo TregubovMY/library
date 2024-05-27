@@ -1,10 +1,8 @@
-= provide :page_title, t('shared.menu.books')
 = currently_at t('shared.menu.books')
 
 h1 = t 'shared.menu.books'
 
-- if policy(@books).create?
-  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3'
+= link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3' if can? :create, Book
 
 .row.mt-3
   .col-md-4
@@ -24,4 +22,4 @@ h1 = t 'shared.menu.books'
       tbody
         = render @books
 
-    = pagination @pagy
+    = paginate @books

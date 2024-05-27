@@ -1,0 +1,6 @@
+tr
+  td = book.title
+  td = book.author
+  th #{book.available_books} / #{book.total_books}
+  td
+    = link_to t('global.button.show'), book_path(book), class: 'btn btn-primary'

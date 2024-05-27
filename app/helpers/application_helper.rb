@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  include Pagy::Frontend
-
-  def pagination(obj)
-    # rubocop:disable Rails/OutputSafety
-    raw(pagy_bootstrap_nav(obj)) if obj.pages > 1
-    # rubocop:enable Rails/OutputSafety
-  end
-
-  def full_title(page_title = '')
-    base_title = t 'global.name'
-    if page_title.empty?
-      base_title
-    else
-      "#{base_title} | #{page_title}"
-    end
-  end
-
   def nav_tab(title, url, options = {})
     current_page = options.delete :current_page
 
