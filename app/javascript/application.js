@@ -5,7 +5,8 @@ import Rails from "@rails/ujs"
 
 import '@popperjs/core'
 import 'bootstrap/js/dist/dropdown'
-
+import './modal'
 Rails.start()
 // Turbolinks.start()
 // ActiveStorage.start()
+
