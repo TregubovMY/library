@@ -16,7 +16,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const timeBtn = createButton("Время", ["btn", "btn-outline-info"], {
-        display: "none"
+        display: "none",
+        position: "absolute",
+        bottom:"50px",
+        right: "50px"
     });
 
     const timeModal = createModal({
@@ -53,10 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleDisplay(timeBtn, timeModal);
     };
 
-    const divBtn = document.getElementById("btn-time");
-    divBtn.style.position = "absolute";
-    divBtn.style.bottom = "50px";
-    divBtn.style.right = "50px";
+    const divBtn = document.querySelector("main");
     divBtn.appendChild(timeBtn);
     divBtn.appendChild(timeModal);
 
