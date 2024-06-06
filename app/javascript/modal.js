@@ -14,55 +14,68 @@
 //
 // все стили для них также должны быть написаны на js
 
+const securities = [
+    { name: 'Сбер Банк', ticker: 'SBER' },
+    { name: 'МТС', ticker: 'MTSS' },
+    { name: 'Тинькофф групп', ticker: 'TCS' },
+    { name: 'Московская биржа', ticker: 'MOEX' }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
-    const timeBtn = createButton("Время", ["btn", "btn-outline-info"], {
+    const btn = createButton("Поиск", ["btn", "btn-outline-info"], {
         display: "none",
         position: "absolute",
-        bottom:"50px",
-        right: "50px"
+        bottom: "50px",
+        right: "50px",
+        padding: "10px 20px",
     });
 
-    const timeModal = createModal({
-        cursor: "pointer",
-        backgroundColor: "white",
+    const modal = createModal({
+        display: "none",
         position: "absolute",
         bottom: "0",
         right: "0",
-        width: "120px",
-        height: "80px",
-        display: "none",
+        width: "400px",
+        height: "400px",
         margin: "20px",
         padding: "20px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)"
+        backgroundColor: "#fff",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+        borderRadius: "5px"
     });
 
-    const timeDisplay = createTimeDisplay({
-        fontSize: "20px",
-        color: "black"
-    });
+    const form = document.createElement('form');
+    const label = createLabel('Инструмент', { marginBottom: "10px" });
+    const input = createInput(['form-control'], { marginBottom: "10px" });
 
-    timeModal.appendChild(timeDisplay);
+    form.append(label, input);
+    modal.appendChild(form);
+
+    const output = document.createElement('p');
+    modal.appendChild(output);
+
+    output.innerText = `Результаты:\n${findByTicker(input.value)}`;
+
+    input.addEventListener('input', () => {
+        output.innerText = `Результаты:\n${findByTicker(input.value)}`;
+    })
 
     document.querySelector('html').onclick = (e) => {
-        if (!timeModal.contains(e.target) && e.target !== timeBtn) {
-            toggleDisplay(timeModal, timeBtn);
+        if (!modal.contains(e.target) && e.target !== btn) {
+            toggleDisplay(modal, btn);
         }
     };
 
-    setInterval(updateTime, 1000, timeDisplay);
-    updateTime(timeDisplay); // Обновляем время сразу при загрузке
-
-    timeBtn.onclick = () => {
-        toggleDisplay(timeBtn, timeModal);
+    btn.onclick = () => {
+        toggleDisplay(btn, modal);
     };
 
     const divBtn = document.querySelector("main");
-    divBtn.appendChild(timeBtn);
-    divBtn.appendChild(timeModal);
+    divBtn.append(btn, modal);
 
     setTimeout(() => {
-        timeBtn.style.display = 'block';
-    }, 5000);
+        btn.style.display = 'block';
+    }, 1000);
 });
 
 function createButton(text, classes, styles) {
@@ -80,21 +93,35 @@ function createModal(styles) {
     return modal;
 }
 
-function createTimeDisplay(styles) {
-    const display = document.createElement('p');
-    Object.assign(display.style, styles);
-    return display;
+function createLabel(text, styles) {
+    const label = document.createElement('label');
+    label.innerText = text;
+    Object.assign(label.style, styles);
+    return label;
 }
 
-function updateTime(display) {
-    const now = new Date();
-    const second = String(now.getSeconds()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    display.innerText = `${hours}:${minutes}:${second}`;
+function createInput(classes, styles) {
+    const input = document.createElement('input');
+    input.classList.add(...classes);
+    Object.assign(input.style, styles);
+    return input;
 }
 
 function toggleDisplay(hideElement, showElement) {
     hideElement.style.display = "none";
     showElement.style.display = "block";
+}
+
+function findByTicker(pattern) {
+    if (pattern === "") {
+        return securities.map(el => el.ticker);
+    }
+    pattern = pattern.toLowerCase();
+
+    return securities.reduce((tickers, security) => {
+        if (security.name.toLowerCase().includes(pattern)) {
+            tickers.push(security.ticker);
+        }
+        return tickers;
+    }, []);
 }

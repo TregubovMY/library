@@ -6,7 +6,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     application: "./app/javascript/application.js",
-    modal: "./app/javascript/modal.js",
+    modal: "./app/javascript/modal.js"
   },
   output: {
     filename: "[name].js",
