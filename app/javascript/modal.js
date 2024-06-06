@@ -47,19 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.createElement('form');
     const label = createLabel('Инструмент', { marginBottom: "10px" });
     const input = createInput(['form-control'], { marginBottom: "10px" });
-    const formBtn = createButton('Фильтровать', ["btn", "btn-outline-info"],
-        { marginBottom: "10px" });
 
-    form.append(label, input, formBtn);
+    form.append(label, input);
     modal.appendChild(form);
 
     const output = document.createElement('p');
     modal.appendChild(output);
 
-    formBtn.onclick = () => {
-        const res = findByTicker(input.value);
-        output.innerText = `Результаты:\n${res}`;
-    };
+    output.innerText = `Результаты:\n${findByTicker(input.value)}`;
+
+    input.addEventListener('input', () => {
+        output.innerText = `Результаты:\n${findByTicker(input.value)}`;
+    })
 
     document.querySelector('html').onclick = (e) => {
         if (!modal.contains(e.target) && e.target !== btn) {
@@ -76,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         btn.style.display = 'block';
-    }, 5000);
+    }, 1000);
 });
 
 function createButton(text, classes, styles) {
