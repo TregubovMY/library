@@ -2,24 +2,32 @@
 
 h1 = t 'shared.menu.books'
 
-= link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3' if can? :create, Book
+= turbo_frame_tag Book.new do
+  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3',
+        data: {turbo_frame: dom_id(Book.new)} if can? :create, Book
 
-.row.mt-3
-  .col-md-4
-    h3 = t 'global.title_filter'
+= turbo_frame_tag "books_table" do
+  .row.mt-3
+    .col-md-4
+      h3 = t 'global.title_filter'
 
-    = render 'shared/filter', path: books_path
+      = render 'shared/filter', path: books_path
 
-  .col-md-8
-    - scope = 'activerecord.attributes.book'
-    table.table.table-striped.table-hover
-      thead
-        tr
-          th.col = t 'title', scope: scope
-          th.col = t 'author', scope: scope
-          th.col = t '.available_all'
-          th.col
-      tbody
-        = render @books
+    .col-md-8
+      - scope = 'activerecord.attributes.book'
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th.col = t 'title', scope: scope
+            th.col = t 'author', scope: scope
+            th.col = t '.available_all'
+            th.col
+        tbody id="books_body"
+          = render @books
 
-    = paginate @books
+      = paginate @books
+
+div
+  div
+    div
+      h1 some

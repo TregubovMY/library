@@ -11,6 +11,11 @@ class BooksController < ApplicationController
     @books = apply_scopes(Book)
              .search_book(params[:title], params[:author], current_user&.admin_role?).page(params[:page])
 
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+
     add_breadcrumb t('shared.menu.books'), books_path
   end
 
@@ -35,7 +40,7 @@ class BooksController < ApplicationController
     @book = Book.new book_params
 
     if @book.save
-      redirect_to books_path, flash: { success: t('.success') }
+      flash.now[:success] = t('.success')
     else
       render :new
     end
@@ -43,7 +48,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update book_params
-      redirect_to book_path(@book), flash: { success: t('.success') }
+      redirect_to book_path(@book)#, flash: { success: t('.success') }
     else
       render :edit
     end

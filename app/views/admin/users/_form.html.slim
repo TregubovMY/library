@@ -1,48 +1,50 @@
-= render 'shared/errors', object: user
+= turbo_frame_tag user do
 
-= form_with model: [:admin, user] do |f|
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :name
+  = render 'shared/errors', object: user
 
-    .col-sm-10
-      = f.text_field :name, class: 'form-control form-control-lg'
+  = form_with model: [:admin, user] do |f|
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :name
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :email
+      .col-sm-10
+        = f.text_field :name, class: 'form-control form-control-lg'
 
-    .col-sm-10
-      = f.email_field :email, class: 'form-control form-control-lg'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :email
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :phone
+      .col-sm-10
+        = f.email_field :email, class: 'form-control form-control-lg'
 
-    .col-sm-10
-      = f.telephone_field :phone, class: 'form-control form-control-lg'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :phone
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :role
+      .col-sm-10
+        = f.telephone_field :phone, class: 'form-control form-control-lg'
 
-    .col-sm-10
-      = f.select :role, user_roles, {}, class: 'form-select form-select-lg'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :role
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :password
+      .col-sm-10
+        = f.select :role, user_roles, {}, class: 'form-select form-select-lg'
 
-    .col-sm-10
-      = f.password_field :password, class: 'form-control form-control-lg'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :password
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :password_confirmation
+      .col-sm-10
+        = f.password_field :password, class: 'form-control form-control-lg'
 
-    .col-sm-10
-      = f.password_field :password_confirmation,
-              class: 'form-control form-control-lg'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :password_confirmation
 
-  - t_key = (user.new_record? ? 'register' : 'save')
-  = f.submit t(t_key, scope: 'users.global.forms'), class: 'btn btn-primary'
+      .col-sm-10
+        = f.password_field :password_confirmation,
+                class: 'form-control form-control-lg'
+
+    - t_key = (user.new_record? ? 'register' : 'save')
+    = f.submit t(t_key, scope: 'users.global.forms'), class: 'btn btn-primary'

@@ -19,6 +19,6 @@ html
     = yield :main_menu
 
     main.container.mt-3
-      - flash.each do |k, v|
-        = tag.div v, class: "alert alert-#{k}", role: 'alert'
+      div id="flash"
+        = render "shared/flash"
       == yield

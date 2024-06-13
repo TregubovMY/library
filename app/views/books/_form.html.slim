@@ -1,40 +1,42 @@
-= render 'shared/errors', object: @book
+= turbo_frame_tag @book do
 
-= form_with model: @book do |f|
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :title
+  = render 'shared/errors', object: @book
 
-    .col-sm-10
-      = f.text_field :title, class: 'form-control'
+  = form_with model: @book do |f|
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :title
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :author
+      .col-sm-10
+        = f.text_field :title, class: 'form-control'
 
-    .col-sm-10
-      = f.text_field :author, class: 'form-control'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :author
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :available_books
+      .col-sm-10
+        = f.text_field :author, class: 'form-control'
 
-    .col-sm-10
-      = f.text_field :available_books, value: @book.available_books,
-              class: 'form-control', readonly: true
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :available_books
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :total_books
+      .col-sm-10
+        = f.text_field :available_books, value: @book.available_books,
+                class: 'form-control', readonly: true
 
-    .col-sm-10
-      = f.text_field :total_books, class: 'form-control'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :total_books
 
-  .mb-3.row
-    .col-sm-2.col-form-label
-      = f.label :description
+      .col-sm-10
+        = f.text_field :total_books, class: 'form-control'
 
-    .col-sm-10
-      = f.text_area :description, class: 'form-control'
+    .mb-3.row
+      .col-sm-2.col-form-label
+        = f.label :description
 
-  = f.submit t('global.button.submit'), class: 'btn btn-primary'
+      .col-sm-10
+        = f.text_area :description, class: 'form-control'
+
+    = f.submit t('global.button.submit'), class: 'btn btn-primary'

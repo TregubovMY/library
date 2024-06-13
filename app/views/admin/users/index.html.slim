@@ -2,8 +2,9 @@
 
 h1.mb-4 = t '.title'
 
-= link_to t('admin.button.create_user'), new_admin_user_path,
-        class: 'btn btn-primary mb-3'
+= turbo_frame_tag User.new do
+  = link_to t('admin.button.create_user'), new_admin_user_path, class: 'btn btn-primary mb-3',
+        data: {turbo_frame: dom_id(User.new)}
 
 - scope = 'activerecord.attributes.user'
 table.table.table-striped.table-hover
@@ -16,7 +17,7 @@ table.table.table-striped.table-hover
       th scope='col' = t 'role', scope: scope
       th scope='col' = t 'created_at', scope: scope
       th scope='col'
-  tbody
+  tbody id="users_body"
     = render @users
 
 = paginate @users

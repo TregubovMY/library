@@ -18,4 +18,8 @@ module ApplicationHelper
   def currently_at(current_page)
     render partial: 'shared/menu', locals: { current_page: }
   end
+
+  def prepend_flash
+    turbo_stream.prepend 'flash', partial: 'shared/flash'
+  end
 end

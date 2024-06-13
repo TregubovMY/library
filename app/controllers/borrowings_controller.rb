@@ -9,6 +9,11 @@ class BorrowingsController < ApplicationController
     @books = apply_scopes(Borrowing)
              .search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
 
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
 
