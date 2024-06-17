@@ -14,9 +14,7 @@ class Book < ApplicationRecord
 
   scope :search_book, (lambda do |query = nil, admin = false|
     search_query = admin ? all.with_deleted : all
-    if query.present?
-      search_query = search_query.where('title ILIKE :query OR author ILIKE :query', query: "%#{query}%")
-    end
+    search_query = search_query.where('title ILIKE :query OR author ILIKE :query', query: "%#{query}%") if query.present?
     search_query
   end)
 

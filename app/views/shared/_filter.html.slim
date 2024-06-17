@@ -3,7 +3,7 @@
   .row
     .col-md-2.d-flex.align-items-center
       .form-group
-        = f.label :title_or_author, class: 'form-label'
+        = f.label :title_or_author, t(".title_or_author"), class: 'form-label'
     .col-md-10
       .form-group
         = f.search_field :title_or_author, value: params[:title_or_author],

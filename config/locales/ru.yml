@@ -60,6 +60,8 @@ ru:
       my_books: Мои книги
       create_user: Создать пользователя
       sign_in: Войти
+    filter:
+      title_or_author: Название или автор
   books:
     index:
       add_book: Добавить книгу

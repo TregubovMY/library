@@ -7,12 +7,7 @@ class BorrowingsController < ApplicationController
   has_scope :search_book_by_user
   def index
     @books = apply_scopes(Borrowing)
-             .search_book_by_user(current_user, params[:title], params[:author]).page(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
+             .search_book_by_user(current_user, params[:title_or_author]).page(params[:page])
 
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
