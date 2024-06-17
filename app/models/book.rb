@@ -18,6 +18,9 @@ class Book < ApplicationRecord
     search_query
   end)
 
+  after_create_commit { broadcast_prepend_to :books_list }
+  # after_update_commit { broadcast_replace_to "book_#{id}" }
+
   private
 
   def available_books_must_be_less_than_or_equal_to_total_books

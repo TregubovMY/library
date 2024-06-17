@@ -3,26 +3,17 @@
 h1 = t 'shared.menu.books'
 
 = turbo_frame_tag Book.new do
-  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3',
-        data: {turbo_frame: dom_id(Book.new)} if can? :create, Book
+  = render 'books/add_new_book_btn'
 
 .row.p-3
-  / h3 = t 'global.title_filter'
-
   = render 'shared/filter', path: books_path
 
-= turbo_frame_tag "books_table", data: { turbo_action: 'advance' } do
-    .col-md-12
-      - scope = 'activerecord.attributes.book'
-      table.table.table-striped.table-hover
-        thead
-          tr
-            th.col = t 'title', scope: scope
-            th.col = t 'author', scope: scope
-            th.col = t '.available_all'
-            th.col
-        tbody id="books_body"
-          = render @books
+= turbo_stream_from :books_list
+.col-md-12
+  - scope = 'activerecord.attributes.book'
+  .list-group
+    = turbo_frame_tag :books_list, data: { turbo_action: 'advance' } do
+      = render @books
 
     .d-flex.justify-content-center.mt-3
       = paginate @books

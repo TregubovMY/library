@@ -1,9 +1,14 @@
-tr class=(book.deleted? ? 'table-danger' : '')
-  td
-    = highlight(book.title, params[:title_or_author])
-    span.text-danger = ' Удалена' if book.deleted?
-  td = highlight(book.author, params[:title_or_author])
-  th #{book.available_books} / #{book.total_books}
-  td
-    = link_to t('global.button.show'), book_path(book), class: 'btn btn-primary',
-            data: { turbo_frame: '_top' }
+= turbo_frame_tag dom_id(book) do
+  article class=(book.deleted? ? 'list-group-item list-group-item-danger' : 'list-group-item')
+    .d-flex.justify-content-between.align-items-center
+      .book-details
+        h5.mb-1
+          = highlight(book.title, params[:title_or_author])
+          span.text-danger = ' Удалена' if book.deleted?
+        small.text-muted
+          = highlight(book.author, params[:title_or_author])
+        p.mb-1
+          = "#{book.available_books} / #{book.total_books}"
+      .book-actions
+        = link_to t('global.button.show'), book_path(book), class: 'btn btn-primary',
+                data: { turbo_frame: '_top' }

@@ -1,5 +1,5 @@
 - scope = 'activerecord.attributes.book'
-= form_with url: path, method: :get, local: true, data: { turbo_frame: 'books_table' } do |f|
+= form_with url: path, method: :get, local: true, data: { turbo_frame: :books_list } do |f|
   .row
     .col-md-2.d-flex.align-items-center
       .form-group
