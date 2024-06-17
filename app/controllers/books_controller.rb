@@ -9,12 +9,7 @@ class BooksController < ApplicationController
 
   def index
     @books = apply_scopes(Book)
-             .search_book(params[:title], params[:author], current_user&.admin_role?).page(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream
-    end
+             .search_book(params[:title_or_author], current_user&.admin_role?).page(params[:page])
 
     add_breadcrumb t('shared.menu.books'), books_path
   end
@@ -73,7 +68,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :description, :total_books)
+    params.require(:book).permit(:title, :author, :description, :total_books, :title_or_author)
   end
 
   def set_book!

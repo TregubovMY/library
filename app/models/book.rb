@@ -12,11 +12,12 @@ class Book < ApplicationRecord
 
   before_update :update_available_books
 
-  scope :search_book, (lambda do |title = nil, author = nil, admin = false|
-    query = admin ? all.with_deleted : all
-    query = query.where('title LIKE ?', "%#{title}%") if title.present?
-    query = query.where('author LIKE ?', "%#{author}%") if author.present?
-    query
+  scope :search_book, (lambda do |query = nil, admin = false|
+    search_query = admin ? all.with_deleted : all
+    if query.present?
+      search_query = search_query.where('title ILIKE :query OR author ILIKE :query', query: "%#{query}%")
+    end
+    search_query
   end)
 
   private
