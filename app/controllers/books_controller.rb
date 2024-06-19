@@ -11,7 +11,16 @@ class BooksController < ApplicationController
     @books = apply_scopes(Book)
              .search_book(params[:title_or_author], current_user&.admin_role?).page(params[:page])
 
-    add_breadcrumb t('shared.menu.books'), books_path
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update(:books_list, partial: 'books/books', locals: { books: @books })
+        ]
+      end
+      add_breadcrumb t('shared.menu.books'), books_path
+
+    end
   end
 
   def show

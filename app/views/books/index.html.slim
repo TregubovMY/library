@@ -1,5 +1,7 @@
 = currently_at t('shared.menu.books')
 
+div data-controller='debounce'
+
 h1 = t 'shared.menu.books'
 
 = turbo_frame_tag Book.new do
@@ -13,7 +15,4 @@ h1 = t 'shared.menu.books'
   - scope = 'activerecord.attributes.book'
   .list-group
     = turbo_frame_tag :books_list, data: { turbo_action: 'advance' } do
-      = render @books
-
-    .d-flex.justify-content-center.mt-3
-      = paginate @books
+      = render partial: 'books/books', locals: { books: @books }
