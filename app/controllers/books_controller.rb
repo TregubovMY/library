@@ -34,10 +34,27 @@ class BooksController < ApplicationController
   def create
     @book = Book.new book_params
 
-    if @book.save
-      flash.now[:success] = t('.success')
-    else
-      render :new
+    respond_to do |format|
+      if @book.save
+        flash.now[:success] = t('.success')
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update(Book.new, partial: 'books/add_new_book_btn'),
+            turbo_stream.prepend(:books_list, partial: 'books/book', locals: { book: @book }),
+            turbo_stream.prepend('flash', partial: 'shared/flash')
+          ]
+        end
+        format.html do
+          redirect_to :books, flash: t('.success')
+        end
+      else
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.update(Book.new, partial: 'books/form', locals: { book: @book }),
+          ]
+        end
+        format.html { render :new }
+      end
     end
   end
 

@@ -18,7 +18,7 @@ class Book < ApplicationRecord
     search_query
   end)
 
-  after_create_commit { broadcast_prepend_to :books_list }
+  after_create_commit { broadcast_prepend_to 'books', target: :books_list }
   # after_update_commit { broadcast_replace_to "book_#{id}" }
 
   private
