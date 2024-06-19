@@ -1,39 +1,7 @@
 = currently_at t('shared.menu.book')
  
 = turbo_frame_tag @book do
-
-  h1.mb-4 = @book.title
-
-  .lead.my-3
-    = @book.author
-
-  .lead.my-3
-    = @book.description
-
-  .lead.my-3
-    = t('.available_all_msg', available_books: @book.available_books, total_books: @book.total_books)
-
-  .btn-group
-    - if can? :manage, Book
-      = link_to t('global.button.edit'), edit_book_path(@book), class: 'btn btn-primary'
-      - if @book.deleted?
-        = link_to t('global.button.restore'), restore_book_path(@book),
-                class: 'btn btn-danger', method: :patch
-      - else
-        = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-                data: { method: :delete, confirm: t('global.dialog.you_sure'), turbo_stream: false }
-
-    - if can? :manage, Borrowing
-      - if @borrowing.present?
-        = link_to t('global.button.return_book'), borrowing_path(@borrowing),
-                method: :patch, class: 'btn btn-secondary'
-      - elsif @book.available_books <= 0
-        button.btn.disabled.secondary = t('.no_book')
-      - else
-        = link_to t('global.button.take_book'), book_borrowings_path(@book),
-                  method: :post, class: 'btn btn-secondary'
-
-
+  = render 'books/book_all', book: @book
 hr
 
 h1 = t '.history_borrowings'

@@ -80,9 +80,7 @@ class BooksController < ApplicationController
       if @book.destroy
         format.html { redirect_to books_path, flash: { success: t('.success') } }
         format.turbo_stream do
-          # render turbo_stream: [
-          #   turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
-          # ]
+          render turbo_stream: turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
         end
       else
         format.html { render :show }
@@ -92,10 +90,18 @@ class BooksController < ApplicationController
   end
 
   def restore
-    if @book.restore
-      redirect_to book_path(@book), flash: { success: t('.success') }
-    else
-      render :show
+    respond_to do |format|
+      if @book.restore
+        format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
+        format.turbo_stream do
+
+          render turbo_stream: [
+            turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book }),
+          ]
+        end
+      else
+         format.html { render :show }
+      end
     end
   end
 
