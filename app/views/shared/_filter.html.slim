@@ -1,6 +1,6 @@
 - scope = 'activerecord.attributes.book'
 = form_with url: path, method: :get, local: true,
-        data: { controller: 'debounce', debounce_target: 'form', turbo_frame: :books_list, turbo_stream: true } do |f|
+        data: { controller: 'debounce', debounce_target: 'form', turbo_frame: :books, turbo_stream: true } do |f|
   .row
     .col-md-2.d-flex.align-items-center
       .form-group

@@ -15,7 +15,7 @@ class BooksController < ApplicationController
       format.html
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update(:books_list, partial: 'books/books', locals: { books: @books })
+          turbo_stream.update(:books, partial: 'books/books', locals: { books: @books })
         ]
       end
       add_breadcrumb t('shared.menu.books'), books_path
@@ -49,7 +49,7 @@ class BooksController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update(Book.new, partial: 'books/add_new_book_btn'),
-            turbo_stream.prepend(:books_list, partial: 'books/book', locals: { book: @book }),
+            turbo_stream.prepend(:books, partial: 'books/book', locals: { book: @book }),
             turbo_stream.prepend('flash', partial: 'shared/flash')
           ]
         end
@@ -76,11 +76,19 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    if @book.destroy
-      redirect_to books_path, flash: { success: t('.success') }
-    else
-      render :show
+    respond_to do |format|
+      if @book.destroy
+        format.html { redirect_to books_path, flash: { success: t('.success') } }
+        format.turbo_stream do
+          # render turbo_stream: [
+          #   turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+          # ]
+        end
+      else
+        format.html { render :show }
+      end
     end
+
   end
 
   def restore

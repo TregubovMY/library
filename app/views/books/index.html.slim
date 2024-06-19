@@ -10,9 +10,9 @@ h1 = t 'shared.menu.books'
 .row.p-3
   = render 'shared/filter', path: books_path
 
-= turbo_stream_from :books_list
+= turbo_stream_from :books
 .col-md-12
   - scope = 'activerecord.attributes.book'
   .list-group
-    = turbo_frame_tag :books_list, data: { turbo_action: 'advance' } do
+    = turbo_frame_tag :books, data: { turbo_action: 'advance' } do
       = render partial: 'books/books', locals: { books: @books }

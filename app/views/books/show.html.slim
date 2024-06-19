@@ -21,7 +21,7 @@
                 class: 'btn btn-danger', method: :patch
       - else
         = link_to t('global.button.delete'), book_path(@book), class: 'btn btn-danger',
-                data: { method: :delete, confirm: t('global.dialog.you_sure') }
+                data: { method: :delete, confirm: t('global.dialog.you_sure'), turbo_stream: false }
 
     - if can? :manage, Borrowing
       - if @borrowing.present?
