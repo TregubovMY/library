@@ -6,9 +6,6 @@ Rails.application.routes.draw do
 
     resources :books do
       resources :borrowings, only: [:create]
-      collection do
-        post :index
-      end
     end
 
     resources :borrowings, only: %i[index update]
