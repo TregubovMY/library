@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import DebounceController from "./debounce_controller"
 application.register("debounce", DebounceController)
+
+import BookController from "./book_controller"
+application.register("book", BookController)

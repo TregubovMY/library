@@ -15,17 +15,30 @@ class BorrowingsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
     create_borrowing_and_update_book
-    redirect_to book_path(@book), flash: { success: t('.success') }
+
+    respond_to do |format|
+      format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+      end
+    end
   rescue ActiveRecord::RecordInvalid
-    render 'books/show'
+    format.html { render 'books/show' }
   end
 
   def update
     @borrowing = Borrowing.find(params[:id])
     update_borrowing_and_update_book
-    redirect_to book_path(@borrowing.book), flash: { success: t('.success') }
+
+    respond_to do |format|
+      format.html { redirect_to book_path(@borrowing.book), flash: { success: t('.success') } }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@borrowing.book,
+                                                 partial: 'books/book', locals: { book: @borrowing.book, borrowing: @borrowing   })
+      end
+    end
   rescue ActiveRecord::RecordInvalid
-    render 'books/show'
+    format.html { render 'books/show' }
   end
 
   private

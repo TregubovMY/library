@@ -12,12 +12,12 @@ h1.mb-4
 
 .btn-group
   - if can? :manage, Book
-    = link_to t('global.button.edit'), edit_book_path(book), class: 'btn btn-primary'
+    = link_to t('global.button.edit'), edit_book_path(book, context: 'all_books'), class: 'btn btn-primary'
     - if book.deleted?
-      = link_to t('global.button.restore'), restore_book_path(book),
+      = link_to t('global.button.restore'), restore_book_path(book, context: 'all_books'),
               class: 'btn btn-danger', method: :patch
     - else
-      = link_to t('global.button.delete'), book_path(book), class: 'btn btn-danger',
+      = link_to t('global.button.delete'), book_path(book, context: 'all_books'), class: 'btn btn-danger',
               data: { method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
 
   - if can? :manage, Borrowing

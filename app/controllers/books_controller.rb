@@ -53,14 +53,11 @@ class BooksController < ApplicationController
             turbo_stream.prepend('flash', partial: 'shared/flash')
           ]
         end
-        format.html do
-          redirect_to :books, flash: t('.success')
-        end
+        format.html { redirect_to :books, flash: t('.success') }
       else
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update(Book.new, partial: 'books/form', locals: { book: @book }),
-          ]
+          render turbo_stream: turbo_stream.update(Book.new,
+                                                   partial: 'books/form', locals: { book: @book })
         end
         format.html { render :new }
       end
@@ -68,10 +65,24 @@ class BooksController < ApplicationController
   end
 
   def update
-    if @book.update book_params
-      redirect_to book_path(@book)#, flash: { success: t('.success') }
-    else
-      render :edit
+    respond_to do |format|
+      if @book.update book_params
+        format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
+        format.turbo_stream do
+          method = case params[:context]
+                   when 'all_books'
+                     turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
+                   when 'single_book'
+                     turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+                   else
+                     turbo_stream.prepend(:books, partial: 'books/book', locals: { book: @book })
+                   end
+
+          render turbo_stream: method
+        end
+      else
+        format.html { render :edit }
+      end
     end
   end
 
@@ -80,13 +91,19 @@ class BooksController < ApplicationController
       if @book.destroy
         format.html { redirect_to books_path, flash: { success: t('.success') } }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
+          method = case params[:context]
+                   when 'all_books'
+                     turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
+                   when 'single_book'
+                     turbo_stream.prepend(:books, partial: 'books/book', locals: { book: @book })
+                   end
+
+        render turbo_stream: method
         end
       else
         format.html { render :show }
       end
     end
-
   end
 
   def restore
@@ -94,10 +111,14 @@ class BooksController < ApplicationController
       if @book.restore
         format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
         format.turbo_stream do
+          method = case params[:context]
+                   when 'all_books'
+                     turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
+                   when 'single_book'
+                     turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+                   end
 
-          render turbo_stream: [
-            turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book }),
-          ]
+          render turbo_stream: method
         end
       else
          format.html { render :show }
