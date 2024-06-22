@@ -23,11 +23,12 @@
                     data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
         - if can? :manage, Borrowing
-          - if @borrowing.present?
-            = link_to t('global.button.return_book'), borrowing_path(@borrowing),
+          - id_borrowing = book.decorate.current_user_take?(current_user)
+          - if id_borrowing
+            = link_to t('global.button.return_book'), borrowing_path(id_borrowing, context: 'single_book'),
                     method: :patch, class: 'btn btn-secondary mb-1'
           - elsif book.available_books <= 0
             button.btn.disabled.secondary = t('.no_book')
           - else
-            = link_to t('global.button.take_book'), book_borrowings_path(book),
+            = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
                       method: :post, class: 'btn btn-secondary'

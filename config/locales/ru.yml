@@ -138,6 +138,8 @@ ru:
       filter: Фильтровать
       update: Обновить
       back: Назад
+    status:
+      not_returned: Не возвращено
     dialog:
       you_sure: Вы уверены?
     flash:

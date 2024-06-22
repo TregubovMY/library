@@ -140,6 +140,8 @@ en:
       take_book: Take book
       return_book: Return book
       filter: Filter
+    status:
+      not_returned: No returned
     dialog:
       you_sure: Are you sure?
     flash:

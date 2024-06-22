@@ -19,7 +19,17 @@ class BorrowingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+        method = case params[:context]
+                 when 'all_books'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
+                 when 'single_book'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
+                 end
+
+        render turbo_stream: [method,
+                              turbo_stream.append(:borrowings,
+                                                  partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
+                             ]
       end
     end
   rescue ActiveRecord::RecordInvalid
@@ -27,14 +37,23 @@ class BorrowingsController < ApplicationController
   end
 
   def update
-    @borrowing = Borrowing.find(params[:id])
+    @borrowing = Borrowing.includes(:book).find(params[:id])
     update_borrowing_and_update_book
 
     respond_to do |format|
       format.html { redirect_to book_path(@borrowing.book), flash: { success: t('.success') } }
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update(@borrowing.book,
-                                                 partial: 'books/book', locals: { book: @borrowing.book, borrowing: @borrowing   })
+        method = case params[:context]
+                 when 'all_books'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
+                 when 'single_book'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
+                 end
+
+        render turbo_stream: [method,
+                              turbo_stream.update(@borrowing,
+                                                  partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
+        ]
       end
     end
   rescue ActiveRecord::RecordInvalid

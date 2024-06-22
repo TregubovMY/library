@@ -18,7 +18,10 @@ class Book < ApplicationRecord
     search_query
   end)
 
-  broadcasts_to ->(book) { :books }, inserts_by: :prepend
+  broadcasts_to ->(book) { :books }, inserts_by: :append
+  # after_create_commit -> { broadcast_prepend_to :books }
+  # after_update_commit -> { broadcast_replace_to "books" }
+  # after_destroy_commit -> { broadcast_replace_to :books }
 
   private
 

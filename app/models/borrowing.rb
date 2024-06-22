@@ -8,6 +8,8 @@ class Borrowing < ApplicationRecord
 
   validate :return_date_after_borrow_date
 
+  broadcasts_to ->(borrowing) { :borrowings }, inserts_by: :append
+
   scope :search_book_by_user, (lambda do |user, title_or_author = nil|
     query = borrowing_by_user(user)
     query = query.where('title ILIKE :query OR author ILIKE :query', query: "%#{title_or_author}%") if title_or_author.present?
