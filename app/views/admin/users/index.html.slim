@@ -11,5 +11,11 @@ h1.mb-4 = t '.title'
 = turbo_stream_from :users
 = turbo_frame_tag :modal
 
+.row.p-3
+  = render 'shared/filter', path: admin_users_path
+
 = turbo_frame_tag :users do
   = render @users
+
+  .d-flex.justify-content-center.mt-3
+    = paginate @users

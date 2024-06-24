@@ -138,6 +138,7 @@ ru:
       filter: Фильтровать
       update: Обновить
       back: Назад
+      close: Закрыть
     status:
       not_returned: Не возвращено
     dialog:

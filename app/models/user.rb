@@ -25,6 +25,15 @@ class User < ApplicationRecord
 
   after_destroy_commit -> { broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self } }
 
+  scope :search_by_name_email_or_created_at_or_role, (lambda do |query = nil|
+    if query.present?
+      role_value = roles[query.downcase.to_sym] if roles.key?(query.downcase.to_sym)
+      where('name ILIKE :query OR email ILIKE :query OR created_at::text ILIKE :query OR role = :role_value', query: "%#{query}%", role_value: role_value)
+    else
+      all
+    end
+  end)
+
   def restore(options = {})
     super(options)
     broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self }

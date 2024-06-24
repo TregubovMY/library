@@ -140,6 +140,7 @@ en:
       take_book: Take book
       return_book: Return book
       filter: Filter
+      close: Close
     status:
       not_returned: No returned
     dialog:

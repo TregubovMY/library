@@ -6,9 +6,14 @@ module Admin
     before_action :set_user!, only: %i[edit update destroy restore]
 
     def index
-      @users = User.with_deleted.order(created_at: :desc).page(params[:page])
+      @users = User.search_by_name_email_or_created_at_or_role(params[:title_or_author]).page(params[:page])
 
-      add_breadcrumb t('shared.menu.users'), admin_users_path
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+
+        add_breadcrumb t('shared.menu.users'), admin_users_path
+      end
     end
 
     def new
