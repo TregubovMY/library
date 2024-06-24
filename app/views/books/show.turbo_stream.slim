@@ -1,0 +1,5 @@
+= turbo_stream.update(:borrowings) do
+  = render @borrowings
+
+  .d-flex.justify-content-center.mt-3
+    = paginate @borrowings

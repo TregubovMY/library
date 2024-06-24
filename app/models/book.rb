@@ -23,8 +23,6 @@ class Book < ApplicationRecord
   # broadcasts_to ->(book) { :books }, inserts_by: :append
   after_create_commit -> { broadcast_prepend_to :books }
   after_update_commit lambda {
-    id_borrowing =
-
     broadcast_replace_later_to :book_all, partial: 'books/book_all'
     broadcast_replace_later_to :books
   }

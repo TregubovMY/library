@@ -24,6 +24,14 @@ class Borrowing < ApplicationRecord
     query
   end)
 
+  scope :search_by_user, (lambda do |book_id, query = nil|
+    if query.present?
+      joins(:user).where('borrowings.book_id = :book_id AND (users.name ILIKE :query OR users.email ILIKE :query OR borrowings.borrowed_at::text ILIKE :query OR borrowings.returned_at::text ILIKE :query)', book_id: book_id, query: "%#{query}%")
+    else
+      where(book_id: book_id)
+    end
+  end)
+
   def self.borrowing_by_user(user)
     select('books.*, book_id').where(user_id: user.id, returned_at: nil).joins(:book)
   end

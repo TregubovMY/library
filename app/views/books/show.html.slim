@@ -8,6 +8,9 @@ hr
 
 h1 = t '.history_borrowings'
 
+.row.p-3
+  = render 'shared/filter', path: book_path(@book)
+
 = turbo_stream_from :borrowings
 .col-md-12
   - scope = 'activerecord.attributes.borrowing'
@@ -15,4 +18,5 @@ h1 = t '.history_borrowings'
     = turbo_frame_tag :borrowings do
       = render @borrowings
 
-      = paginate @borrowings
+      .d-flex.justify-content-center.mt-3
+        = paginate @borrowings
