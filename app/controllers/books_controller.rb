@@ -18,9 +18,9 @@ class BooksController < ApplicationController
     respond_to do |format|
       format.html
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.update(:books, partial: 'books/books', locals: { books: @books, context: params[:context] })
-        ]
+        # render turbo_stream: [
+        #   turbo_stream.update(:books, partial: 'books/books', locals: { books: @books })
+        # ]
       end
       add_breadcrumb t('shared.menu.books'), books_path
 
@@ -58,6 +58,7 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
+        @book.id_borrowing = @book.decorate.current_user_take?(current_user)
         flash.now[:success] = t('.success')
         format.turbo_stream do
           render turbo_stream: [
@@ -80,6 +81,7 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update book_params
+        @book.id_borrowing = @book.decorate.current_user_take?(current_user)
         format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
         format.turbo_stream do
           method = case params[:book][:context]

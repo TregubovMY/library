@@ -1,2 +1,4 @@
-= turbo_stream.update(Book.new, partial: 'books/add_new_book_btn')
+= turbo_stream.update(Book.new) do
+  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3',
+        data: {turbo_frame: dom_id(Book.new)} if can? :create, Book
 = turbo_stream.prepend('flash', partial: 'shared/flash')

@@ -22,13 +22,13 @@
                     data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
         .borrowing-manage
-         - if book.id_borrowing
-           = link_to t('global.button.return_book'), borrowing_path(book.id_borrowing, context: 'single_book'),
-                   method: :patch, class: 'btn btn-primary mb-1'
-         - elsif book.available_books <= 0
-           button.btn.disabled.secondary = t('.no_book')
-         - else
-           = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
+          - if book&.id_borrowing
+            = link_to t('global.button.return_book'), borrowing_path(book&.id_borrowing, context: 'single_book'),
+                    method: :patch, class: 'btn btn-primary mb-1'
+          - elsif book.available_books <= 0
+            button.btn.disabled.secondary = t('.no_book')
+          - else
+            = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
                      method: :post, class: 'btn btn-secondary'
 
     p.d-none.book-description data-book-target="description"

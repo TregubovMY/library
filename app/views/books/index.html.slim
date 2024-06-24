@@ -5,7 +5,8 @@ div data-controller='debounce'
 h1 = t 'shared.menu.books'
 
 = turbo_frame_tag Book.new do
-  = render 'books/add_new_book_btn'
+  = link_to t('.add_book'), new_book_path, class: 'btn btn-primary btn-lg mb-3',
+        data: {turbo_frame: dom_id(Book.new)} if can? :create, Book
 
 .row.p-3
   = render 'shared/filter', path: books_path
@@ -15,4 +16,7 @@ h1 = t 'shared.menu.books'
   - scope = 'activerecord.attributes.book'
   .list-group
     = turbo_frame_tag :books, data: { controller: 'books', 'books-admin-value': current_user&.role } do
-      = render partial: 'books/books', locals: { books: @books }
+      = render partial: 'books/book', collection: @books
+
+      .d-flex.justify-content-center.mt-3
+        = paginate @books
