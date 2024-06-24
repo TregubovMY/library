@@ -1,23 +1,15 @@
-- currently_at t('shared.menu.users')
+= currently_at t('shared.menu.users')
 
 h1.mb-4 = t '.title'
 
-= turbo_frame_tag User.new do
-  = link_to t('admin.button.create_user'), new_admin_user_path, class: 'btn btn-primary mb-3',
-        data: {turbo_frame: dom_id(User.new)}
+
+= link_to t('admin.button.create_user'), new_admin_user_path, class: 'btn btn-primary mb-3',
+        data: { turbo_frame: :modal }
 
 - scope = 'activerecord.attributes.user'
-table.table.table-striped.table-hover
-  thead
-    tr
-      th scope='col' #
-      th scope='col' = t 'name', scope: scope
-      th scope='col' = t 'email', scope: scope
-      th scope='col' = t 'phone', scope: scope
-      th scope='col' = t 'role', scope: scope
-      th scope='col' = t 'created_at', scope: scope
-      th scope='col'
-  tbody id="users_body"
-    = render @users
 
-= paginate @users
+= turbo_stream_from :users
+= turbo_frame_tag :modal
+
+= turbo_frame_tag :users do
+  = render @users

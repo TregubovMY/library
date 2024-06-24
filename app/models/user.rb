@@ -20,6 +20,16 @@ class User < ApplicationRecord
 
   before_save :normalize_phone
 
+  after_create_commit -> { broadcast_prepend_later_to :users, partial: 'admin/users/user', locals: { user: self } }
+  after_update_commit -> { broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self } }
+
+  after_destroy_commit -> { broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self } }
+
+  def restore(options = {})
+    super(options)
+    broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self }
+  end
+
   def guest_role?
     false
   end

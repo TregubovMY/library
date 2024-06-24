@@ -25,31 +25,58 @@ module Admin
       @user = User.new user_params
       @user.skip_confirmation!
 
-      if @user.save
-        redirect_to admin_users_path, flash: { success: t('.success') }
-      else
-        render :new
+      respond_to do |format|
+        flash.now[:success] = t('.success')
+        if @user.save
+          format.html { redirect_to admin_users_path, flash: { success: t('.success') } }
+
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.remove(:modal),
+              turbo_stream.prepend('flash', partial: 'shared/flash')
+            ]
+          end
+        else
+          format.html { render :new }
+        end
       end
     end
 
     def update
-      if update_user_attributes
-        redirect_to admin_users_path, flash: { success: t('.success') }
-      else
-        render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        if update_user_attributes
+          flash.now[:success] = t('.success')
+          format.html { redirect_to admin_users_path, flash: { success: t('.success') } }
+          # redirect_to admin_users_path, flash: { success: t('.success') }
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.remove(:modal),
+              turbo_stream.prepend('flash', partial: 'shared/flash')
+            ]
+          end
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          # render :edit, status: :unprocessable_entity
+        end
       end
     end
 
     def destroy
       @user.destroy
-      redirect_to admin_users_path, flash: { success: t('.success') }, status: :see_other
+      respond_to do |format|
+        format.html { redirect_to admin_users_path, flash: { success: t('.success') }, status: :see_other }
+        format.turbo_stream
+      end
     end
 
     def restore
-      if @user.restore
-        redirect_to admin_users_path, flash: { success: t('.success') }
-      else
-        render :index
+      respond_to do |format|
+        if @user.restore
+          format.html { redirect_to admin_users_path, flash: { success: t('.success') } }
+          format.turbo_stream
+        else
+          format.html { render :index }
+        end
       end
     end
 

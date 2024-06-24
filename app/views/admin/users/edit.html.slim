@@ -1,5 +1,7 @@
 = currently_at t('shared.menu.users')
 
-h1 = t('.title')
+= turbo_frame_tag :modal do
+  .modal-pop-app
+    h1 = t('.title')
 
-= render 'form', user: @user
+    = render 'form', user: @user

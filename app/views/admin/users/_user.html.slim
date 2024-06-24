@@ -1,15 +1,18 @@
-tr class=('table-danger' if user.deleted?)
-  th scope="row" = user.id
-  td = user.name
-  td = user.email
-  td = user.phone
-  td = user.role
-  td = user.created_at
-  td
-    = link_to t('global.button.edit'), edit_admin_user_path(user), class: 'btn btn-secondary'
-    - if user.deleted?
-      = link_to t('global.button.restore'), restore_admin_user_path(user), class: 'btn btn-warning',
-              data: { method: :patch, confirm: t('global.dialog.you_sure') }
-    - else
-      = link_to t('global.button.delete'), admin_user_path(user), class: 'btn btn-danger',
-              data: { method: :delete, confirm: t('global.dialog.you_sure') }
+= turbo_frame_tag dom_id(user) do
+  = tag.article class: (user.deleted? ? 'list-group-item list-group-item-danger' : 'list-group-item')
+    .d-flex.justify-content-between.align-items-center
+      .book-details
+        .mb-1 = user.name
+        .mb-1 = user.email
+        .mb-1 = user.phone
+        .mb-1 = user.role
+        .mb-1 = user.created_at
+      .user-actions.d-flex.flex-column
+        = link_to t('global.button.edit'), edit_admin_user_path(user), class: 'btn btn-secondary',
+                data: { turbo_frame: :modal }
+        - if user.deleted?
+          = link_to t('global.button.restore'), restore_admin_user_path(user), class: 'btn btn-warning',
+                  data: { method: :patch, confirm: t('global.dialog.you_sure') }
+        - else
+          = link_to t('global.button.delete'), admin_user_path(user), class: 'btn btn-danger',
+                  data: { method: :delete, confirm: t('global.dialog.you_sure') }

@@ -15,3 +15,6 @@ application.register("books", BooksController)
 
 import BookController from "./book_controller"
 application.register("book", BookController)
+
+import ModalsController from "./modals_controller"
+application.register("modal", ModalsController)

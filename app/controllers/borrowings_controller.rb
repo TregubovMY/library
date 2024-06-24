@@ -19,17 +19,17 @@ class BorrowingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
       format.turbo_stream do
-        method = case params[:context]
-                 when 'all_books'
-                   turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book})
-                 when 'single_book'
-                   turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
-                 end
-
-        render turbo_stream: [method,
-                              turbo_stream.append(:borrowings,
-                                                  partial: 'borrowings/borrowing', locals: { borrowing: @book.id_borrowing })
-                             ]
+        # method = case params[:context]
+        #          when 'all_books'
+        #            turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book})
+        #          when 'single_book'
+        #            turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+        #          end
+        #
+        # render turbo_stream: [method,
+        #                       turbo_stream.append(:borrowings,
+        #                                           partial: 'borrowings/borrowing', locals: { borrowing: @book.id_borrowing })
+        #                      ]
       end
     end
   rescue ActiveRecord::RecordInvalid
@@ -43,19 +43,19 @@ class BorrowingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to book_path(@borrowing.book), flash: { success: t('.success') } }
       format.turbo_stream do
-        method = case params[:context]
-                 when 'all_books'
-                   turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
-                 when 'single_book'
-                   turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
-                 when 'taked_books'
-                   turbo_stream.remove("borrowing_#{@borrowing.book.id}")
-                 end
-
-        render turbo_stream: [method,
-                              turbo_stream.update(@borrowing,
-                                                  partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
-        ]
+        # method = case params[:context]
+        #          when 'all_books'
+        #            turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
+        #          when 'single_book'
+        #            turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
+        #          when 'taked_books'
+        #            turbo_stream.remove("borrowing_#{@borrowing.book.id}")
+        #          end
+        #
+        # render turbo_stream: [method,
+        #                       turbo_stream.update(@borrowing,
+        #                                           partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
+        # ]
       end
     end
   rescue ActiveRecord::RecordInvalid

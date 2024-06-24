@@ -2,7 +2,7 @@
 
   = render 'shared/errors', object: user
 
-  = form_with model: [:admin, user] do |f|
+  = form_with model: [:admin, user], data: { turbo_stream: true } do |f|
     .mb-3.row
       .col-sm-2.col-form-label
         = f.label :name
@@ -48,3 +48,5 @@
 
     - t_key = (user.new_record? ? 'register' : 'save')
     = f.submit t(t_key, scope: 'users.global.forms'), class: 'btn btn-primary'
+
+    = link_to 'Cansel', '#', data: { controller: 'modal', action: 'modal#close' }, class: 'btn btn-danger'
