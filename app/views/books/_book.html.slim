@@ -1,6 +1,6 @@
 = turbo_frame_tag dom_id(book) do
   = tag.article class: (book.deleted? ? 'list-group-item list-group-item-danger' : 'list-group-item'),
-          data: { controller: 'book', 'action': 'click->book#showDescription' }
+          data: { controller: 'book', 'action': 'click->book#showDescription', 'books-target': 'book' }
     .d-flex.justify-content-between.align-items-center
       .book-details
         h5.mb-1
@@ -12,7 +12,7 @@
           = "#{book.available_books} / #{book.total_books}"
 
       .book-actions.d-flex.flex-column
-        - if true #can? :manage, Book
+        .book-manage
           = link_to t('global.button.edit'), edit_book_path(book, context: 'single_book'), class: 'btn btn-primary mb-1'
           - if book.deleted?
             = link_to t('global.button.restore'), restore_book_path(book, context: 'single_book'),
@@ -21,15 +21,15 @@
             = link_to t('global.button.delete'), book_path(book, context: 'single_book'), class: 'btn btn-danger',
                     data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
-        / - if can? :manage, Borrowing
-          - id_borrowing = book.decorate.current_user_take?(current_user)
-          - if id_borrowing
-            = link_to t('global.button.return_book'), borrowing_path(id_borrowing, context: 'single_book'),
-                    method: :patch, class: 'btn btn-secondary mb-1'
-          - elsif book.available_books <= 0
-            button.btn.disabled.secondary = t('.no_book')
-          - else
-            = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
-                      method: :post, class: 'btn btn-secondary'
+        .borrowing-manage
+         - if book.id_borrowing
+           = link_to t('global.button.return_book'), borrowing_path(book.id_borrowing, context: 'single_book'),
+                   method: :patch, class: 'btn btn-primary mb-1'
+         - elsif book.available_books <= 0
+           button.btn.disabled.secondary = t('.no_book')
+         - else
+           = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
+                     method: :post, class: 'btn btn-secondary'
+
     p.d-none.book-description data-book-target="description"
       = book.description

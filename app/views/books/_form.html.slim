@@ -3,7 +3,7 @@
     = render 'shared/errors', object: @book
 
     = form_with model: @book, data: { turbo_stream: true } do |f|
-      = f.hidden_field :context, value: context
+      = f.hidden_field :context, value: context ||= nil
 
       .mb-3.row
         .col-sm-2.col-form-label
@@ -25,7 +25,7 @@
 
         .col-sm-10
           = f.text_field :available_books, value: @book.available_books,
-                  class: 'form-control', readonly: true
+                  class: 'form-control'
 
       .mb-3.row
         .col-sm-2.col-form-label

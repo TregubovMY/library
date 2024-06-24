@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ['description']
+
   connect() {
   }
 
@@ -10,5 +11,5 @@ export default class extends Controller {
     if (e.target.tagName.toLowerCase() !== 'a') {
          this.descriptionTarget.classList.toggle('d-none')
        }
-    }
+  }
 }

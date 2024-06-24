@@ -1,33 +1,35 @@
-h1.mb-4
-  = book.title
+= turbo_frame_tag dom_id(book), data: {'books-target': 'book'} do
+  h1.mb-4
+    = book.title
 
-.lead.my-3
-  = book.author
+  .lead.my-3
+    = book.author
 
-.lead.my-3
-  = book.description
+  .lead.my-3
+    = book.description
 
-.lead.my-3
-  = t('.available_all_msg', available_books: book.available_books, total_books: book.total_books)
+  .lead.my-3
+    = t('.available_all_msg', available_books: book.available_books, total_books: book.total_books)
 
-.btn-group
-  - if true #can? :manage, Book
-    = link_to t('global.button.edit'), edit_book_path(book, context: 'all_books'), class: 'btn btn-primary'
-    - if book.deleted?
-      = link_to t('global.button.restore'), restore_book_path(book, context: 'all_books'),
-              class: 'btn btn-danger', method: :patch
-    - else
-      = link_to t('global.button.delete'), book_path(book, context: 'all_books'), class: 'btn btn-danger',
-              data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
+  .book-actions.d-flex.flex-column
+    .book-manage
+      = link_to t('global.button.edit'), edit_book_path(book, context: 'single_book'), class: 'btn btn-primary mb-1'
+      - if book.deleted?
+        = link_to t('global.button.restore'), restore_book_path(book, context: 'single_book'),
+                class: 'btn btn-danger', method: :patch
+      - else
+        = link_to t('global.button.delete'), book_path(book, context: 'single_book'), class: 'btn btn-danger',
+                data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
-  / - if can? :manage, Borrowing
-    - id_borrowing = book.decorate.current_user_take?(current_user)
-    - if id_borrowing
-      = link_to t('global.button.return_book'), borrowing_path(id_borrowing, context: 'all_books'),
-              method: :patch, class: 'btn btn-secondary'
-    - elsif book.available_books <= 0
-      button.btn.disabled.secondary = t('.no_book')
-    - else
-      = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'all_books'),
-                method: :post, class: 'btn btn-secondary'
-      
+    .borrowing-manage
+     - if book.id_borrowing
+       = link_to t('global.button.return_book'), borrowing_path(book.id_borrowing, context: 'single_book'),
+               method: :patch, class: 'btn btn-primary mb-1'
+     - elsif book.available_books <= 0
+       button.btn.disabled.secondary = t('.no_book')
+     - else
+       = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
+                 method: :post, class: 'btn btn-secondary'
+
+  p.d-none.book-description data-books-target="description"
+    = book.description

@@ -3,6 +3,8 @@
 class Book < ApplicationRecord
   acts_as_paranoid
 
+  attr_accessor :id_borrowing
+
   has_many :borrowings, dependent: :destroy
   has_many :users, through: :borrowings
 

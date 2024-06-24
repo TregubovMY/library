@@ -11,11 +11,15 @@ class BooksController < ApplicationController
     @books = apply_scopes(Book)
              .search_book(params[:title_or_author], current_user&.admin_role?).page(params[:page])
 
+    @books.each do |book|
+      book.id_borrowing = book.decorate.current_user_take?(current_user)
+    end
+
     respond_to do |format|
       format.html
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update(:books, partial: 'books/books', locals: { books: @books })
+          turbo_stream.update(:books, partial: 'books/books', locals: { books: @books, context: params[:context] })
         ]
       end
       add_breadcrumb t('shared.menu.books'), books_path
@@ -24,7 +28,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @borrowing = Borrowing.borrowing_book_by_user(current_user, @book) if current_user
+    @book.id_borrowing = @book.decorate.current_user_take?(current_user)
     @borrowings = Borrowing.all_borrowings_book(@book).page(params[:page])
 
     add_breadcrumb @book.title, book_path(@book)

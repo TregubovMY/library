@@ -8,7 +8,15 @@ class Borrowing < ApplicationRecord
 
   validate :return_date_after_borrow_date
 
-  broadcasts_to ->(borrowing) { :borrowings }, inserts_by: :append
+  # broadcasts_to ->(borrowing) { :borrowings }, inserts_by: :append
+  after_create_commit lambda {
+    broadcast_prepend_to :borrowings
+    broadcast_replace_later_to :books, target: book, partial: 'books/book', locals: { book: }
+  }
+  after_update_commit lambda {
+    broadcast_replace_later_to :borrowings
+    broadcast_replace_later_to :books, target: book, partial: 'books/book', locals: { book: }
+  }
 
   scope :search_book_by_user, (lambda do |user, title_or_author = nil|
     query = borrowing_by_user(user)

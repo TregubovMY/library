@@ -14,21 +14,21 @@ class BorrowingsController < ApplicationController
 
   def create
     @book = Book.find(params[:book_id])
-    @book = create_borrowing_and_update_book
+    @book, @book.id_borrowing = create_borrowing_and_update_book
 
     respond_to do |format|
       format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
       format.turbo_stream do
         method = case params[:context]
                  when 'all_books'
-                   turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @book })
+                   turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book})
                  when 'single_book'
-                   turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @book })
+                   turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
                  end
 
         render turbo_stream: [method,
                               turbo_stream.append(:borrowings,
-                                                  partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
+                                                  partial: 'borrowings/borrowing', locals: { borrowing: @book.id_borrowing })
                              ]
       end
     end
@@ -69,7 +69,7 @@ class BorrowingsController < ApplicationController
       @borrowing = @book.borrowings.create!(user: current_user, borrowed_at: Time.zone.now)
       @book.decrement(:available_books).save!
     end
-    @book
+    [@book, @borrowing]
   end
 
   def update_borrowing_and_update_book
