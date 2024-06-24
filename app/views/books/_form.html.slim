@@ -3,6 +3,8 @@
     = render 'shared/errors', object: @book
 
     = form_with model: @book, data: { turbo_stream: true } do |f|
+      = f.hidden_field :context, value: context
+
       .mb-3.row
         .col-sm-2.col-form-label
           = f.label :title

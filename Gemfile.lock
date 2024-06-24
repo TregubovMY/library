@@ -81,6 +81,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
+    after_commit_everywhere (1.4.0)
+      activerecord (>= 4.2)
+      activesupport
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -379,6 +382,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  after_commit_everywhere
   bcrypt (~> 3.1.7)
   bootsnap
   breadcrumbs_on_rails

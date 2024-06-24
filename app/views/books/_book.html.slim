@@ -10,10 +10,9 @@
           = highlight(book.author, params[:title_or_author])
         p.mb-1
           = "#{book.available_books} / #{book.total_books}"
-        p.d-none.book-description data-book-target="description"
-          = book.description
+
       .book-actions.d-flex.flex-column
-        - if can? :manage, Book
+        - if true #can? :manage, Book
           = link_to t('global.button.edit'), edit_book_path(book, context: 'single_book'), class: 'btn btn-primary mb-1'
           - if book.deleted?
             = link_to t('global.button.restore'), restore_book_path(book, context: 'single_book'),
@@ -22,7 +21,7 @@
             = link_to t('global.button.delete'), book_path(book, context: 'single_book'), class: 'btn btn-danger',
                     data: { method: :delete, confirm: t('global.dialog.you_sure') }
 
-        - if can? :manage, Borrowing
+        / - if can? :manage, Borrowing
           - id_borrowing = book.decorate.current_user_take?(current_user)
           - if id_borrowing
             = link_to t('global.button.return_book'), borrowing_path(id_borrowing, context: 'single_book'),
@@ -32,3 +31,5 @@
           - else
             = link_to t('global.button.take_book'), book_borrowings_path(book, context: 'single_book'),
                       method: :post, class: 'btn btn-secondary'
+    p.d-none.book-description data-book-target="description"
+      = book.description

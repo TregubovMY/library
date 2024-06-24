@@ -11,16 +11,16 @@ h1.mb-4
   = t('.available_all_msg', available_books: book.available_books, total_books: book.total_books)
 
 .btn-group
-  - if can? :manage, Book
+  - if true #can? :manage, Book
     = link_to t('global.button.edit'), edit_book_path(book, context: 'all_books'), class: 'btn btn-primary'
     - if book.deleted?
       = link_to t('global.button.restore'), restore_book_path(book, context: 'all_books'),
               class: 'btn btn-danger', method: :patch
     - else
       = link_to t('global.button.delete'), book_path(book, context: 'all_books'), class: 'btn btn-danger',
-              data: { method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
+              data: { turbo_method: :delete, confirm: t('global.dialog.you_sure'), turbo_frame: '_top' }
 
-  - if can? :manage, Borrowing
+  / - if can? :manage, Borrowing
     - id_borrowing = book.decorate.current_user_take?(current_user)
     - if id_borrowing
       = link_to t('global.button.return_book'), borrowing_path(id_borrowing, context: 'all_books'),

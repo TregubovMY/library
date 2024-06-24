@@ -41,7 +41,7 @@ en:
         borrowed_at: Borrowed at
         returned_at: Returned at
     models:
-      question: Book
+      question: book
   pages:
     index:
       title: Welcome to library!
@@ -49,7 +49,7 @@ en:
     menu:
       home: Home
       books: Books
-      book: Book
+      book: book
       new_book: New book
       user_profile: User profile
       edit_profile: Edit profile
@@ -66,13 +66,13 @@ en:
       add_book: Add book
       available_all: Available / All
     create:
-      success: Book created!
+      success: book created!
     destroy:
-      success: Book deleted!
+      success: book deleted!
     edit:
       title: Edit book
     update:
-      success: Book updated!
+      success: book updated!
     show:
       no_book: No book
       history_borrowings: History borrowings
@@ -81,9 +81,9 @@ en:
       success: Restore success
   borrowings:
     create:
-      success: Book taken successfully!
+      success: book taken successfully!
     update:
-      success: Book returned successfully!
+      success: book returned successfully!
     index:
       available_all: Available / All
   users:

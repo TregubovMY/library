@@ -1,5 +1,7 @@
 = currently_at t('shared.menu.book')
- 
+
+= turbo_stream_from :book_all
+
 = turbo_frame_tag @book do
   = render 'books/book_all', book: @book
 hr
