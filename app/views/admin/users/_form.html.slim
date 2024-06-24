@@ -49,4 +49,5 @@
     - t_key = (user.new_record? ? 'register' : 'save')
     = f.submit t(t_key, scope: 'users.global.forms'), class: 'btn btn-primary'
 
-    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' }, class: 'btn btn-danger'
+    = link_to t('global.button.close'), '#', data: { controller: 'modal', action: 'modal#close' },
+            class: 'btn btn-danger'

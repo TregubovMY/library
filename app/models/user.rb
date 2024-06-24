@@ -20,15 +20,23 @@ class User < ApplicationRecord
 
   before_save :normalize_phone
 
-  after_create_commit -> { broadcast_prepend_later_to :users, partial: 'admin/users/user', locals: { user: self } }
-  after_update_commit -> { broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self } }
+  after_create_commit lambda {
+                        broadcast_prepend_later_to :users, partial: 'admin/users/user', locals: { user: self }
+                      }
 
-  after_destroy_commit -> { broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self } }
+  after_update_commit lambda {
+                        broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self }
+                      }
+
+  after_destroy_commit lambda {
+                         broadcast_replace_later_to :users, partial: 'admin/users/user', locals: { user: self }
+                       }
 
   scope :search_by_name_email_or_created_at_or_role, (lambda do |query = nil|
     if query.present?
       role_value = roles[query.downcase.to_sym] if roles.key?(query.downcase.to_sym)
-      where('name ILIKE :query OR email ILIKE :query OR created_at::text ILIKE :query OR role = :role_value', query: "%#{query}%", role_value: role_value)
+      where('name ILIKE :query OR email ILIKE :query OR created_at::text ILIKE :query OR role = :role_value',
+            query: "%#{query}%", role_value:)
     else
       all
     end
@@ -50,7 +58,6 @@ class User < ApplicationRecord
   end
 
   def password_complexity
-    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
     return if password.blank? || password =~ /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/
 
     errors.add :password, :complexity_error

@@ -7,7 +7,7 @@ class BorrowingsController < ApplicationController
   has_scope :search_book_by_user
   def index
     @books = apply_scopes(Borrowing)
-             .search_book_by_user(current_user, params[:title_or_author]).page(params[:page])
+             .search_book_by_user(current_user, params[:search_query]).page(params[:page])
 
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
@@ -18,19 +18,7 @@ class BorrowingsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
-      format.turbo_stream do
-        # method = case params[:context]
-        #          when 'all_books'
-        #            turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book})
-        #          when 'single_book'
-        #            turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
-        #          end
-        #
-        # render turbo_stream: [method,
-        #                       turbo_stream.append(:borrowings,
-        #                                           partial: 'borrowings/borrowing', locals: { borrowing: @book.id_borrowing })
-        #                      ]
-      end
+      format.turbo_stream
     end
   rescue ActiveRecord::RecordInvalid
     format.html { render 'books/show' }

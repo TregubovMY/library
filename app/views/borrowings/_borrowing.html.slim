@@ -3,12 +3,12 @@
     .d-flex.flex-wrap.justify-content-between.align-items-center
       .borrowing-details.d-flex.flex-wrap.align-items-center
         h5.mb-1.mr-3
-          = highlight(borrowing.user.name, params[:title_or_author])
+          = highlight(borrowing.user.name, params[:search_query])
         small.text-muted.mr-3
-          = highlight(borrowing.user.email, params[:title_or_author])
+          = highlight(borrowing.user.email, params[:search_query])
         p.mb-1
           - borrowed_at_formatted = borrowing.borrowed_at.strftime('%Y-%m-%d <mark>%H:%M</mark>:%S %Z')
           - returned_at_formatted = borrowing.returned_at&.strftime('%Y-%m-%d %H:%M:%S %Z') || t('global.status.not_returned')
-          = highlight(borrowed_at_formatted, params[:title_or_author])
+          = highlight(borrowed_at_formatted, params[:search_query])
           |  -
-          = highlight(returned_at_formatted, params[:title_or_author])
+          = highlight(returned_at_formatted, params[:search_query])

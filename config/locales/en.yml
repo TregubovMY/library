@@ -60,7 +60,7 @@ en:
       my_books: My books
       create_user: Create user
       sign_in: Sign In
-    title_or_author: Title or author
+    search_query: Search query
   books:
     index:
       add_book: Add book

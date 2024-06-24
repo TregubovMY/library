@@ -4,10 +4,10 @@
     .d-flex.justify-content-between.align-items-center
       .book-details
         h5.mb-1
-          = link_to highlight(book.title, params[:title_or_author]), book_path(book), data: { turbo_frame: '_top' }
+          = link_to highlight(book.title, params[:search_query]), book_path(book), data: { turbo_frame: '_top' }
           span.text-danger = ' Удалена' if book.deleted?
         small.text-muted
-          = highlight(book.author, params[:title_or_author])
+          = highlight(book.author, params[:search_query])
         p.mb-1
           = "#{book.available_books} / #{book.total_books}"
 

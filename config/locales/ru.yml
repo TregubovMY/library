@@ -61,7 +61,7 @@ ru:
       create_user: Создать пользователя
       sign_in: Войти
     filter:
-      title_or_author: Название или автор
+      search_query: Поисковый запрос
   books:
     index:
       add_book: Добавить книгу

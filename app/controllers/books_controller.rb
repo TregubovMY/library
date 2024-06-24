@@ -8,8 +8,7 @@ class BooksController < ApplicationController
   has_scope :search_book
 
   def index
-    @books = apply_scopes(Book)
-             .search_book(params[:title_or_author], current_user&.admin_role?).page(params[:page])
+    @books = Book.search_book(params[:search_query], current_user&.admin_role?).page(params[:page])
 
     @books.each do |book|
       book.id_borrowing = book.decorate.current_user_take?(current_user)
@@ -24,8 +23,7 @@ class BooksController < ApplicationController
 
   def show
     @book.id_borrowing = @book.decorate.current_user_take?(current_user)
-    # @borrowings = Borrowing.all_borrowings_book(@book).page(params[:page]).per(5)
-    @borrowings = Borrowing.search_by_user(@book.id, params[:title_or_author]).page(params[:page]).per(5)
+    @borrowings = Borrowing.search_by_user(@book.id, params[:search_query]).page(params[:page]).per(5)
 
     add_breadcrumb @book.title, book_path(@book)
   end
@@ -48,13 +46,7 @@ class BooksController < ApplicationController
       if @book.save
         @book.id_borrowing = @book.decorate.current_user_take?(current_user)
         flash.now[:success] = t('.success')
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update(Book.new, partial: 'books/add_new_book_btn'),
-            turbo_stream.prepend(:books, partial: 'books/book', locals: { book: @book }),
-            turbo_stream.prepend('flash', partial: 'shared/flash')
-          ]
-        end
+        format.turbo_stream
         format.html { redirect_to :books, flash: t('.success') }
       else
         format.turbo_stream do
@@ -93,18 +85,9 @@ class BooksController < ApplicationController
     respond_to do |format|
       if @book.restore
         format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
-        format.turbo_stream #do
-        #   method = case params[:context]
-        #            when 'all_books'
-        #              turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
-        #            when 'single_book'
-        #              turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
-        #            end
-        #
-        #   render turbo_stream: method
-        # end
+        format.turbo_stream
       else
-         format.html { render :show }
+        format.html { render :show }
       end
     end
   end

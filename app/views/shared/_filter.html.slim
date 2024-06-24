@@ -4,8 +4,8 @@
   .row
     .col-md-2.d-flex.align-items-center
       .form-group
-        = f.label :title_or_author, t(".title_or_author"), class: 'form-label'
+        = f.label :search_query, t(".search_query"), class: 'form-label'
     .col-md-10
       .form-group
-        = f.search_field :title_or_author, value: params[:title_or_author],
+        = f.search_field :search_query, value: params[:search_query],
                 data: { action: "input->debounce#search" }, class: 'form-control'

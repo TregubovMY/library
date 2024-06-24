@@ -6,7 +6,7 @@ module Admin
     before_action :set_user!, only: %i[edit update destroy restore]
 
     def index
-      @users = User.search_by_name_email_or_created_at_or_role(params[:title_or_author]).page(params[:page])
+      @users = User.search_by_name_email_or_created_at_or_role(params[:search_query]).page(params[:page])
 
       respond_to do |format|
         format.html
@@ -52,7 +52,6 @@ module Admin
         if update_user_attributes
           flash.now[:success] = t('.success')
           format.html { redirect_to admin_users_path, flash: { success: t('.success') } }
-          # redirect_to admin_users_path, flash: { success: t('.success') }
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.remove(:modal),
@@ -61,7 +60,6 @@ module Admin
           end
         else
           format.html { render :edit, status: :unprocessable_entity }
-          # render :edit, status: :unprocessable_entity
         end
       end
     end

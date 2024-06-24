@@ -13,8 +13,6 @@ export default class extends Controller {
   bookTargetConnected(element) {
     const bookManage = element.querySelector('.book-manage')
     const borrowingManage = element.querySelector('.borrowing-manage')
-    // console.log(this.adminValue)
-    // console.log(this.element)
 
     if(borrowingManage && this.adminValue === 'admin') {
       borrowingManage.remove()
