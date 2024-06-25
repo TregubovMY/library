@@ -10,7 +10,7 @@
         p.mb-1
           = "#{book.available_books} / #{book.total_books}"
       .book-actions.d-flex.flex-column
-        = link_to t('global.button.return_book'), borrowing_path(id_borrowing,
+        = link_to t('global.button.return_book'), borrowing_path(book.id_borrowing,
                 context: 'taked_books'), method: :patch, class: 'btn btn-secondary mb-1'
     p.d-none.book-description data-book-target="description"
       = book.description

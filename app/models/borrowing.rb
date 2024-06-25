@@ -10,14 +10,10 @@ class Borrowing < ApplicationRecord
 
   after_create_commit lambda {
     broadcast_prepend_to :borrowings
-    book.id_borrowing = id
-    broadcast_prepend_later_to :my_books, target: book, partial: 'borrowings/book', locals: { book: }
   }
 
   after_update_commit lambda {
     broadcast_replace_later_to :borrowings
-    book.id_borrowing = id
-    broadcast_replace_later_to :my_books, target: book, partial: 'borrowings/book', locals: { book: }
   }
 
   scope :search_book_by_user, (lambda do |user, title_or_author = nil|

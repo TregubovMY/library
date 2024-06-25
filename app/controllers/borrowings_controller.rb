@@ -7,11 +7,10 @@ class BorrowingsController < ApplicationController
 
   has_scope :search_book_by_user
   def index
-    @books = Borrowing.search_book_by_user(current_user, params[:search_query]).page(params[:page])
+    @books = Borrowing.search_book_by_user(current_user, params[:search_query]).page(params[:page]).map(&method(:book))
 
     @books.each do |book|
-      borrowing = Borrowing.find_by(user_id: current_user&.id, returned_at: nil, book_id: book.id)
-      book.id_borrowing = borrowing.present?
+      book.id_borrowing = book.decorate.current_user_take?(current_user)
     end
 
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
@@ -48,8 +47,10 @@ class BorrowingsController < ApplicationController
       format.turbo_stream do
         method = if params[:context] == 'single_book'
                    turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
+                 elsif params[:context] == 'all_book'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
                  else
-                   turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @borrowing.book })
+                   turbo_stream.remove(@borrowing.book)
                  end
 
         render turbo_stream: [method, turbo_stream.prepend('flash', partial: 'shared/flash')]
@@ -75,6 +76,10 @@ class BorrowingsController < ApplicationController
       @borrowing.book.increment(:available_books).save!
     end
     @borrowing
+  end
+
+  def book(borrowing)
+    borrowing.book # Возвращает объект Book, связанный с borrowing
   end
 end
 # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
