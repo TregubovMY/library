@@ -2,7 +2,7 @@
 
 = turbo_stream_from :book_all
 
-= turbo_frame_tag @book, data: { controller: 'books', 'books-admin-value': current_user&.role } do
+= turbo_frame_tag @books, data: { controller: 'books', 'books-admin-value': current_user&.role } do
   = render 'books/book_all', book: @book
 hr
 

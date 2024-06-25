@@ -17,8 +17,17 @@ class BorrowingsController < ApplicationController
     @book, @book.id_borrowing = create_borrowing_and_update_book
 
     respond_to do |format|
+      flash.now[:success] = t('.success')
       format.html { redirect_to book_path(@book), flash: { success: t('.success') } }
-      format.turbo_stream
+      format.turbo_stream do
+        method = if params[:context] == 'single_book'
+                   turbo_stream.update(@book, partial: 'books/book', locals: { book: @book })
+                 else
+                   turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @book })
+                 end
+
+        render turbo_stream: [method, turbo_stream.prepend('flash', partial: 'shared/flash')]
+      end
     end
   rescue ActiveRecord::RecordInvalid
     format.html { render 'books/show' }
@@ -29,21 +38,16 @@ class BorrowingsController < ApplicationController
     @borrowing = update_borrowing_and_update_book
 
     respond_to do |format|
+      flash.now[:success] = t('.success')
       format.html { redirect_to book_path(@borrowing.book), flash: { success: t('.success') } }
       format.turbo_stream do
-        # method = case params[:context]
-        #          when 'all_books'
-        #            turbo_stream.update(@borrowing.book, partial: 'books/book_all', locals: { book: @borrowing.book })
-        #          when 'single_book'
-        #            turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
-        #          when 'taked_books'
-        #            turbo_stream.remove("borrowing_#{@borrowing.book.id}")
-        #          end
-        #
-        # render turbo_stream: [method,
-        #                       turbo_stream.update(@borrowing,
-        #                                           partial: 'borrowings/borrowing', locals: { borrowing: @borrowing })
-        # ]
+        method = if params[:context] == 'single_book'
+                   turbo_stream.update(@borrowing.book, partial: 'books/book', locals: { book: @borrowing.book })
+                 else
+                   turbo_stream.update(@book, partial: 'books/book_all', locals: { book: @borrowing.book })
+                 end
+
+        render turbo_stream: [method, turbo_stream.prepend('flash', partial: 'shared/flash')]
       end
     end
   rescue ActiveRecord::RecordInvalid

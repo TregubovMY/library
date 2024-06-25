@@ -25,8 +25,8 @@ class Book < ApplicationRecord
   # broadcasts_to ->(book) { :books }, inserts_by: :append
   after_create_commit -> { broadcast_prepend_to :books }
   after_update_commit lambda {
-    broadcast_replace_later_to :book_all, partial: 'books/book_all'
-    broadcast_replace_later_to :books
+    broadcast_replace_to :book_all, partial: 'books/book_all'
+    broadcast_replace_to :books
   }
 
   after_destroy_commit do

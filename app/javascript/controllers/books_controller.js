@@ -11,6 +11,7 @@ export default class extends Controller {
   }
 
   bookTargetConnected(element) {
+    console.log('connect!')
     const bookManage = element.querySelector('.book-manage')
     const borrowingManage = element.querySelector('.borrowing-manage')
 

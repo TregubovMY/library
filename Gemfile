@@ -59,7 +59,6 @@ gem 'devise'
 
 gem 'devise-bootstrap-views'
 gem 'paranoia'
-gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 
 gem 'cancancan'
