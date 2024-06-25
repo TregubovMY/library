@@ -5,9 +5,9 @@ h1 = t 'shared.menu.my_books'
 .row.p-3
   = render 'shared/filter', path: borrowings_path
 
-= turbo_stream_from :books
+= turbo_stream_from :my_books
 .col-md-12
   - scope = 'activerecord.attributes.book'
   .list-group
-    = turbo_frame_tag :books do
+    = turbo_frame_tag :my_books do
       = render partial: 'borrowings/book', collection: @books

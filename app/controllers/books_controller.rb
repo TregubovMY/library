@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 class BooksController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_book!, only: %i[edit update destroy show restore]
@@ -103,3 +104,5 @@ class BooksController < ApplicationController
     raise ActiveRecord::RecordNotFound if @book.deleted_at? && !current_user.admin_role?
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+#

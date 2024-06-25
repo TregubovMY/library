@@ -68,6 +68,8 @@ gem 'sidekiq'
 gem 'stimulus-rails'
 
 gem 'after_commit_everywhere'
+gem 'faker', '~> 2'
+gem 'letter_opener'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -76,16 +78,12 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
 
-  gem 'faker', '~> 2'
-
   gem 'rubocop', '~> 1.6', require: false
   gem 'rubocop-performance', '~> 1.18', require: false
   gem 'rubocop-rails', '~> 2.2', require: false
   gem 'slim_lint', '~> 0.27.0'
 
   gem 'dotenv-rails'
-
-  gem 'letter_opener'
 end
 
 group :development do

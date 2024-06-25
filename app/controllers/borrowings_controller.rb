@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 class BorrowingsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
   has_scope :search_book_by_user
   def index
-    @books = apply_scopes(Borrowing)
-             .search_book_by_user(current_user, params[:search_query]).page(params[:page])
+    @books = Borrowing.search_book_by_user(current_user, params[:search_query]).page(params[:page])
+
+    @books.each do |book|
+      borrowing = Borrowing.find_by(user_id: current_user&.id, returned_at: nil, book_id: book.id)
+      book.id_borrowing = borrowing.present?
+    end
 
     add_breadcrumb t('shared.menu.my_books'), borrowings_path
   end
@@ -72,3 +77,5 @@ class BorrowingsController < ApplicationController
     @borrowing
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+#

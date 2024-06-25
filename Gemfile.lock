@@ -174,12 +174,6 @@ GEM
       sprockets (>= 2)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
-    libv8 (3.16.14.19.1)
-    libv8 (3.16.14.19.1-arm-linux)
-    libv8 (3.16.14.19.1-universal-darwin)
-    libv8 (3.16.14.19.1-x86-linux)
-    libv8 (3.16.14.19.1-x86_64-darwin)
-    libv8 (3.16.14.19.1-x86_64-linux)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -280,7 +274,6 @@ GEM
       redis-client (>= 0.22.0)
     redis-client (0.22.2)
       connection_pool
-    ref (2.0.0)
     regexp_parser (2.9.1)
     reline (0.5.7)
       io-console (~> 0.5)
@@ -339,9 +332,6 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.0)
     temple (0.10.3)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (1.3.1)
     tilt (2.3.0)
     timeout (0.4.1)
@@ -416,7 +406,6 @@ DEPENDENCIES
   slim_lint (~> 0.27.0)
   sprockets-rails
   stimulus-rails
-  therubyracer
   twitter-bootstrap-rails
   valid_email2
   web-console

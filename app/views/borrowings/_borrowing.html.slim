@@ -8,7 +8,8 @@
           = highlight(borrowing.user.email, params[:search_query])
         p.mb-1
           - borrowed_at_formatted = borrowing.borrowed_at.strftime('%Y-%m-%d <mark>%H:%M</mark>:%S %Z')
-          - returned_at_formatted = borrowing.returned_at&.strftime('%Y-%m-%d %H:%M:%S %Z') || t('global.status.not_returned')
+          - returned_at_formatted = borrowing.returned_at&.strftime('%Y-%m-%d %H:%M:%S %Z') \
+                  || t('global.status.not_returned')
           = highlight(borrowed_at_formatted, params[:search_query])
           |  -
           = highlight(returned_at_formatted, params[:search_query])

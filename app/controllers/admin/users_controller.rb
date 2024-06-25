@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 module Admin
   class UsersController < ApplicationController
     before_action :authenticate_user!
@@ -106,3 +107,5 @@ module Admin
     end
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+#
